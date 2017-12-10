@@ -6,13 +6,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>CDorst.DevOps.Primitives.VisualStudio.Projects</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CDorst.Common.EnumStringValues" Version="2.0.0" />
     <PackageReference Include="CDorst.Common.StringExtensions" Version="1.0.0" />
-    <PackageReference Include="CDorst.DevOps.Primitives.Strings" Version="1.0.3" />
+    <PackageReference Include="CDorst.DevOps.Primitives.Strings" Version="1.0.4" />
   </ItemGroup>
 
 </Project>
