@@ -11,6 +11,20 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildTargets", Schema = nameof(VisualStudio))]
     public class MsBuildTarget : IUniqueListRecord
     {
+        private const string Tag = "Target";
+
+        public MsBuildTarget() { }
+        public MsBuildTarget(MsBuildTaskList taskList, AsciiStringReference name, AsciiStringReference outputs = null)
+        {
+            MsBuildTaskList = taskList;
+            Name = name;
+            Outputs = outputs;
+        }
+        public MsBuildTarget(MsBuildTaskList taskList, string name, string outputs = null)
+            : this(taskList, new AsciiStringReference(name), !string.IsNullOrWhiteSpace(outputs) ? new AsciiStringReference(outputs) : null)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildTargetId { get; set; }
@@ -30,7 +44,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int? OutputsId { get; set; }
 
-        public string GetTarget() => $"<Target Name=\"{Name.Value}\"{GetOutputs()}>{MsBuildTaskList.GetTasks()}</Target>";
+        public string GetTarget() => $"<{Tag} Name=\"{Name.Value}\"{GetOutputs()}>{MsBuildTaskList.GetTasks()}</{Tag}>";
 
         private string GetOutputs() => $" Outputs=\"{Outputs.Value}\"".When(Outputs != null);
     }

@@ -8,6 +8,14 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalContructItemGroupPropertyGroupSections", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalContructItemGroupPropertyGroupSection
     {
+        public MsBuildConditionalContructItemGroupPropertyGroupSection() { }
+        public MsBuildConditionalContructItemGroupPropertyGroupSection(MsBuildPropertyGroupList propertyGroupList, MsBuildItemGroupList itemGroupList, MsBuildConditionalConstructList conditionalConstructList)
+        {
+            MsBuildConditionalConstructList = conditionalConstructList;
+            MsBuildItemGroupList = itemGroupList;
+            MsBuildPropertyGroupList = propertyGroupList;
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalContructItemGroupPropertyGroupSectionId { get; set; }

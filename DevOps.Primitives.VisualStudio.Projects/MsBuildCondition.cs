@@ -9,6 +9,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("VisualStudioProjects", Schema = nameof(VisualStudio))]
     public class MsBuildCondition
     {
+        public MsBuildCondition() { }
+        public MsBuildCondition(AsciiStringReference condition) { Condition = condition; }
+        public MsBuildCondition(string condition) : this(new AsciiStringReference(condition)) { }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionId { get; set; }

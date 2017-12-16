@@ -8,6 +8,14 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalConstructOtherwiseElements", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalConstructOtherwiseElement
     {
+        private const string Tag = "Otherwise";
+
+        public MsBuildConditionalConstructOtherwiseElement() { }
+        public MsBuildConditionalConstructOtherwiseElement(MsBuildConditionalContructItemGroupPropertyGroupSection content)
+        {
+            MsBuildConditionalContructItemGroupPropertyGroupSection = content;
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalConstructOtherwiseElementId { get; set; }
@@ -17,6 +25,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(3)]
         public int MsBuildConditionalContructItemGroupPropertyGroupSectionId { get; set; }
 
-        public string GetOtherwiseElement() => $"<Otherwise>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</Otherwise>";
+        public string GetOtherwiseElement() => $"<{Tag}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</{Tag}>";
     }
 }

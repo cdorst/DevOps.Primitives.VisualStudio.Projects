@@ -9,6 +9,15 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalConstructs", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalConstruct : IUniqueListRecord
     {
+        private const string Tag = "Choose";
+
+        public MsBuildConditionalConstruct() { }
+        public MsBuildConditionalConstruct(MsBuildConditionalConstructWhenElementList whenElementList, MsBuildConditionalConstructOtherwiseElement otherwiseElement = null)
+        {
+            MsBuildConditionalConstructWhenElementList = whenElementList;
+            MsBuildConditionalConstructOtherwiseElement = otherwiseElement;
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalConstructId { get; set; }
@@ -23,6 +32,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildConditionalConstructWhenElementListId { get; set; }
 
-        public string GetConditionalConstruct() => $"<Choose>{MsBuildConditionalConstructWhenElementList.GetWhenElements()}{MsBuildConditionalConstructOtherwiseElement?.GetOtherwiseElement()}</Choose>";
+        public string GetConditionalConstruct() => $"<{Tag}>{MsBuildConditionalConstructWhenElementList.GetWhenElements()}{MsBuildConditionalConstructOtherwiseElement?.GetOtherwiseElement()}</{Tag}>";
     }
 }

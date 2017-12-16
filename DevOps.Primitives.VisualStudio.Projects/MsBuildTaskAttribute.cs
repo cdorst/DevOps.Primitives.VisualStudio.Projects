@@ -10,6 +10,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildTaskAttributes", Schema = nameof(VisualStudio))]
     public class MsBuildTaskAttribute : IUniqueListRecord
     {
+        public MsBuildTaskAttribute() { }
+        public MsBuildTaskAttribute(AsciiStringReference attribute, AsciiStringReference value)
+        {
+            Attribute = attribute;
+            Value = value;
+        }
+        public MsBuildTaskAttribute(string attribute, string value)
+            : this(new AsciiStringReference(attribute), new AsciiStringReference(value))
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildTaskAttributeId { get; set; }

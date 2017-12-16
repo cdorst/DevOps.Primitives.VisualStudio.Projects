@@ -10,6 +10,22 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildItems", Schema = nameof(VisualStudio))]
     public class MsBuildItem : IUniqueListRecord
     {
+        public MsBuildItem() { }
+        public MsBuildItem(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null)
+        {
+            ElementName = name;
+            ElementValue = value;
+            MsBuildCondition = condition;
+        }
+        public MsBuildItem(string name, string value, MsBuildCondition condition = null)
+            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition)
+        {
+        }
+        public MsBuildItem(string name, string value, string condition = null)
+            : this(name, value, ConditionHelper.Create(condition))
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildItemId { get; set; }

@@ -13,6 +13,33 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildItemLists", Schema = nameof(VisualStudio))]
     public class MsBuildItemList : IUniqueList<MsBuildItem, MsBuildItemListAssociation>
     {
+        public MsBuildItemList() { }
+        public MsBuildItemList(List<MsBuildItemListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildItemListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildItemList(MsBuildItemListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildItemListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildItemList(MsBuildItem itemGroup, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItemListAssociation(itemGroup), listIdentifier)
+        {
+        }
+        public MsBuildItemList(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItem(name, value, condition), listIdentifier)
+        {
+        }
+        public MsBuildItemList(string name, string value, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItem(name, value, condition), listIdentifier)
+        {
+        }
+        public MsBuildItemList(string name, string value, string condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItem(name, value, condition), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildItemListId { get; set; }
@@ -27,7 +54,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildItemListAssociation> GetAssociations() => MsBuildItemListAssociations;
 
-        public string GetItems() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetItem()));
+        public string GetItems()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetItem()));
 
         public void SetRecords(List<MsBuildItem> records)
         {

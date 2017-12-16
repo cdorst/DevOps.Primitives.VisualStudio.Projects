@@ -9,6 +9,21 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalConstructWhenElementListAssociations", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalConstructWhenElementListAssociation : IUniqueListAssociation<MsBuildConditionalConstructWhenElement>
     {
+        public MsBuildConditionalConstructWhenElementListAssociation() { }
+        public MsBuildConditionalConstructWhenElementListAssociation(MsBuildConditionalConstructWhenElement whenElement, MsBuildConditionalConstructWhenElementList whenElementList = null)
+        {
+            MsBuildConditionalConstructWhenElement = whenElement;
+            MsBuildConditionalConstructWhenElementList = whenElementList;
+        }
+        public MsBuildConditionalConstructWhenElementListAssociation(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildConditionalConstructWhenElementList whenElementList = null)
+            : this(new MsBuildConditionalConstructWhenElement(condition, content), whenElementList)
+        {
+        }
+        public MsBuildConditionalConstructWhenElementListAssociation(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildConditionalConstructWhenElementList whenElementList = null)
+            : this(new MsBuildCondition(condition), content, whenElementList)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalConstructWhenElementListAssociationId { get; set; }

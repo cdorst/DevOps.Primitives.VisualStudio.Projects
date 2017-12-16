@@ -13,6 +13,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalConstructLists", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalConstructList : IUniqueList<MsBuildConditionalConstruct, MsBuildConditionalConstructListAssociation>
     {
+        public MsBuildConditionalConstructList() { }
+        public MsBuildConditionalConstructList(List<MsBuildConditionalConstructListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildConditionalConstructListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildConditionalConstructList(MsBuildConditionalConstructListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildConditionalConstructListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildConditionalConstructList(MsBuildConditionalConstruct construct, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildConditionalConstructListAssociation(construct), listIdentifier)
+        {
+        }
+        public MsBuildConditionalConstructList(MsBuildConditionalConstructWhenElementList whenElementList, MsBuildConditionalConstructOtherwiseElement otherwiseElement = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildConditionalConstruct(whenElementList, otherwiseElement), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalConstructListId { get; set; }
@@ -27,7 +46,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildConditionalConstructListAssociation> GetAssociations() => MsBuildConditionalConstructListAssociations;
 
-        public string GetConditionalConstructs() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetConditionalConstruct()));
+        public string GetConditionalConstructs()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetConditionalConstruct()));
 
         public void SetRecords(List<MsBuildConditionalConstruct> records)
         {

@@ -13,6 +13,29 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildPropertyGroupLists", Schema = nameof(VisualStudio))]
     public class MsBuildPropertyGroupList : IUniqueList<MsBuildPropertyGroup, MsBuildPropertyGroupListAssociation>
     {
+        public MsBuildPropertyGroupList() { }
+        public MsBuildPropertyGroupList(List<MsBuildPropertyGroupListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildPropertyGroupListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildPropertyGroupList(MsBuildPropertyGroupListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildPropertyGroupListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildPropertyGroupList(MsBuildPropertyGroup propertyGroup, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildPropertyGroupListAssociation(propertyGroup), listIdentifier)
+        {
+        }
+        public MsBuildPropertyGroupList(MsBuildPropertyList propertyList, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildPropertyGroup(propertyList, condition), listIdentifier)
+        {
+        }
+        public MsBuildPropertyGroupList(MsBuildPropertyList propertyList, string condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildPropertyGroup(propertyList, condition), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildPropertyGroupListId { get; set; }
@@ -27,7 +50,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildPropertyGroupListAssociation> GetAssociations() => MsBuildPropertyGroupListAssociations;
 
-        public string GetPropertyGroups() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetPropertyGroup()));
+        public string GetPropertyGroups()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetPropertyGroup()));
 
         public void SetRecords(List<MsBuildPropertyGroup> records)
         {

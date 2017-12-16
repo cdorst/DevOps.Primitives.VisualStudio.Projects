@@ -1,4 +1,5 @@
 ﻿using Common.EntityFrameworkServices;
+using DevOps.Primitives.Strings;
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildItemListAssociations", Schema = nameof(VisualStudio))]
     public class MsBuildItemListAssociation : IUniqueListAssociation<MsBuildItem>
     {
+        public MsBuildItemListAssociation() { }
+        public MsBuildItemListAssociation(MsBuildItem item, MsBuildItemList itemList = null)
+        {
+            MsBuildItem = item;
+            MsBuildItemList = itemList;
+        }
+        public MsBuildItemListAssociation(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null, MsBuildItemList itemList = null)
+            : this(new MsBuildItem(name, value, condition), itemList)
+        {
+        }
+        public MsBuildItemListAssociation(string name, string value, MsBuildCondition condition = null, MsBuildItemList itemList = null)
+            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition, itemList)
+        {
+        }
+        public MsBuildItemListAssociation(string name, string value, string condition = null, MsBuildItemList itemList = null)
+            : this(name, value, ConditionHelper.Create(condition), itemList)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildItemListAssociationId { get; set; }

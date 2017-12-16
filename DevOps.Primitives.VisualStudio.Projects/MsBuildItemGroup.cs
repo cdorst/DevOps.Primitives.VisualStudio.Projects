@@ -9,6 +9,19 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildItemGroups", Schema = nameof(VisualStudio))]
     public class MsBuildItemGroup : IUniqueListRecord
     {
+        private const string Tag = "ItemGroup";
+
+        public MsBuildItemGroup() { }
+        public MsBuildItemGroup(MsBuildItemList itemList, MsBuildCondition condition = null)
+        {
+            MsBuildCondition = condition;
+            MsBuildItemList = itemList;
+        }
+        public MsBuildItemGroup(MsBuildItemList itemList, string condition = null)
+            : this(itemList, ConditionHelper.Create(condition))
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildItemGroupId { get; set; }
@@ -23,6 +36,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(3)]
         public int MsBuildItemListId { get; set; }
 
-        public string GetItemGroup() => $"<ItemGroup{MsBuildCondition?.GetCondition()}>{MsBuildItemList.GetItems()}</ItemGroup>";
+        public string GetItemGroup() => $"<{Tag}{MsBuildCondition?.GetCondition()}>{MsBuildItemList.GetItems()}</{Tag}>";
     }
 }

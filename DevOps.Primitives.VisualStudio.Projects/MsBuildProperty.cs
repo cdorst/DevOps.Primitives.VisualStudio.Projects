@@ -10,6 +10,22 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildProperties", Schema = nameof(VisualStudio))]
     public class MsBuildProperty : IUniqueListRecord
     {
+        public MsBuildProperty() { }
+        public MsBuildProperty(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null)
+        {
+            ElementName = name;
+            ElementValue = value;
+            MsBuildCondition = condition;
+        }
+        public MsBuildProperty(string name, string value, MsBuildCondition condition = null)
+            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition)
+        {
+        }
+        public MsBuildProperty(string name, string value, string condition = null)
+            : this(name, value, ConditionHelper.Create(condition))
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildPropertyId { get; set; }

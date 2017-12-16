@@ -9,6 +9,16 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildProjectFiles", Schema = nameof(VisualStudio))]
     public class MsBuildProjectFile
     {
+        private const string Tag = "Project";
+
+        public MsBuildProjectFile() { }
+        public MsBuildProjectFile(ProjectType projectType, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildTargetList targetList)
+        {
+            ProjectType = projectType;
+            MsBuildConditionalContructItemGroupPropertyGroupSection = content;
+            MsBuildTargetList = targetList;
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildProjectFileId { get; set; }
@@ -26,6 +36,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(6)]
         public int? MsBuildTargetListId { get; set; }
 
-        public string GetProjectFile() => $"<Project {ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</Project>";
+        public string GetProjectFile() => $"<{Tag} {ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</{Tag}>";
     }
 }

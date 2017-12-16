@@ -13,6 +13,29 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildItemGroupLists", Schema = nameof(VisualStudio))]
     public class MsBuildItemGroupList : IUniqueList<MsBuildItemGroup, MsBuildItemGroupListAssociation>
     {
+        public MsBuildItemGroupList() { }
+        public MsBuildItemGroupList(List<MsBuildItemGroupListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildItemGroupListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildItemGroupList(MsBuildItemGroupListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildItemGroupListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildItemGroupList(MsBuildItemGroup itemGroup, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItemGroupListAssociation(itemGroup), listIdentifier)
+        {
+        }
+        public MsBuildItemGroupList(MsBuildItemList itemList, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItemGroup(itemList, condition), listIdentifier)
+        {
+        }
+        public MsBuildItemGroupList(MsBuildItemList itemList, string condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItemGroup(itemList, condition), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildItemGroupListId { get; set; }
@@ -27,7 +50,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildItemGroupListAssociation> GetAssociations() => MsBuildItemGroupListAssociations;
 
-        public string GetItemGroups() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetItemGroup()));
+        public string GetItemGroups()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetItemGroup()));
 
         public void SetRecords(List<MsBuildItemGroup> records)
         {

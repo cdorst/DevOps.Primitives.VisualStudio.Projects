@@ -9,6 +9,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("Projects", Schema = nameof(VisualStudio))]
     public class Project
     {
+        public Project() { }
+        public Project(AsciiStringReference name, MsBuildProjectFile projectFile)
+        {
+            Name = name;
+            MsBuildProjectFile = projectFile;
+        }
+        public Project(string name, MsBuildProjectFile projectFile)
+            : this(new AsciiStringReference(name), projectFile)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int ProjectId { get; set; }

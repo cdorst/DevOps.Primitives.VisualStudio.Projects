@@ -13,6 +13,29 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildTargetLists", Schema = nameof(VisualStudio))]
     public class MsBuildTargetList : IUniqueList<MsBuildTarget, MsBuildTargetListAssociation>
     {
+        public MsBuildTargetList() { }
+        public MsBuildTargetList(List<MsBuildTargetListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildTargetListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildTargetList(MsBuildTargetListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildTargetListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildTargetList(MsBuildTarget target, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildTargetListAssociation(target), listIdentifier)
+        {
+        }
+        public MsBuildTargetList(MsBuildTaskList taskList, AsciiStringReference name, AsciiStringReference outputs = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildTarget(taskList, name, outputs), listIdentifier)
+        {
+        }
+        public MsBuildTargetList(MsBuildTaskList taskList, string name, string outputs = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildTarget(taskList, name, outputs), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildTargetListId { get; set; }
@@ -27,7 +50,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildTargetListAssociation> GetAssociations() => MsBuildTargetListAssociations;
 
-        public string GetTargets() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetTarget()));
+        public string GetTargets()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetTarget()));
 
         public void SetRecords(List<MsBuildTarget> records)
         {

@@ -13,6 +13,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildTaskLists", Schema = nameof(VisualStudio))]
     public class MsBuildTaskList : IUniqueList<MsBuildTask, MsBuildTaskListAssociation>
     {
+        public MsBuildTaskList() { }
+        public MsBuildTaskList(List<MsBuildTaskListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildTaskListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildTaskList(MsBuildTaskListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildTaskListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildTaskList(MsBuildTask task, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildTaskListAssociation(task), listIdentifier)
+        {
+        }
+        public MsBuildTaskList(AsciiStringReference element, MsBuildTaskAttributeList taskAttributeList, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildTask(element, taskAttributeList), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildTaskListId { get; set; }
@@ -27,7 +46,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildTaskListAssociation> GetAssociations() => MsBuildTaskListAssociations;
 
-        public string GetTasks() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetTask()));
+        public string GetTasks()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetTask()));
 
         public void SetRecords(List<MsBuildTask> records)
         {

@@ -13,6 +13,29 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalConstructWhenElementLists", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalConstructWhenElementList : IUniqueList<MsBuildConditionalConstructWhenElement, MsBuildConditionalConstructWhenElementListAssociation>
     {
+        public MsBuildConditionalConstructWhenElementList() { }
+        public MsBuildConditionalConstructWhenElementList(List<MsBuildConditionalConstructWhenElementListAssociation> associations, AsciiStringReference listIdentifier = null)
+        {
+            MsBuildConditionalConstructWhenElementListAssociations = associations;
+            ListIdentifier = listIdentifier;
+        }
+        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElementListAssociation associations, AsciiStringReference listIdentifier = null)
+            : this(new List<MsBuildConditionalConstructWhenElementListAssociation> { associations }, listIdentifier)
+        {
+        }
+        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElement whenElement, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildConditionalConstructWhenElementListAssociation(whenElement), listIdentifier)
+        {
+        }
+        public MsBuildConditionalConstructWhenElementList(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildConditionalConstructWhenElement(condition, content), listIdentifier)
+        {
+        }
+        public MsBuildConditionalConstructWhenElementList(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildConditionalConstructWhenElement(condition, content), listIdentifier)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalConstructWhenElementListId { get; set; }
@@ -27,7 +50,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public List<MsBuildConditionalConstructWhenElementListAssociation> GetAssociations() => MsBuildConditionalConstructWhenElementListAssociations;
 
-        public string GetWhenElements() => string.Join(string.Empty, GetAssociations().Select(each => each.GetRecord().GetWhenElement()));
+        public string GetWhenElements()
+            => string.Join(string.Empty,
+                GetAssociations().Select(each => each.GetRecord().GetWhenElement()));
 
         public void SetRecords(List<MsBuildConditionalConstructWhenElement> records)
         {

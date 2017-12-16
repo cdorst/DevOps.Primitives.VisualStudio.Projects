@@ -9,6 +9,19 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildConditionalConstructWhenElements", Schema = nameof(VisualStudio))]
     public class MsBuildConditionalConstructWhenElement : IUniqueListRecord
     {
+        private const string Tag = "When";
+
+        public MsBuildConditionalConstructWhenElement() { }
+        public MsBuildConditionalConstructWhenElement(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content)
+        {
+            MsBuildCondition = condition;
+            MsBuildConditionalContructItemGroupPropertyGroupSection = content;
+        }
+        public MsBuildConditionalConstructWhenElement(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content)
+            : this(new MsBuildCondition(condition), content)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildConditionalConstructWhenElementId { get; set; }
@@ -23,6 +36,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildConditionalContructItemGroupPropertyGroupSectionId { get; set; }
 
-        public string GetWhenElement() => $"<When{MsBuildCondition.GetCondition()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</When>";
+        public string GetWhenElement() => $"<{Tag}{MsBuildCondition.GetCondition()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</{Tag}>";
     }
 }

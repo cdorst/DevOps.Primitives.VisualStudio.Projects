@@ -9,6 +9,21 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildPropertyGroupListAssociations", Schema = nameof(VisualStudio))]
     public class MsBuildPropertyGroupListAssociation : IUniqueListAssociation<MsBuildPropertyGroup>
     {
+        public MsBuildPropertyGroupListAssociation() { }
+        public MsBuildPropertyGroupListAssociation(MsBuildPropertyGroup propertyGroup, MsBuildPropertyGroupList propertyGroupList = null)
+        {
+            MsBuildPropertyGroup = propertyGroup;
+            MsBuildPropertyGroupList = propertyGroupList;
+        }
+        public MsBuildPropertyGroupListAssociation(MsBuildPropertyList propertyList, MsBuildCondition condition = null, MsBuildPropertyGroupList propertyGroupList = null)
+            : this(new MsBuildPropertyGroup(propertyList, condition), propertyGroupList)
+        {
+        }
+        public MsBuildPropertyGroupListAssociation(MsBuildPropertyList propertyList, string condition = null, MsBuildPropertyGroupList propertyGroupList = null)
+            : this(propertyList, ConditionHelper.Create(condition), propertyGroupList)
+        {
+        }
+
         [Key]
         [ProtoMember(1)]
         public int MsBuildPropertyGroupListAssociationId { get; set; }
