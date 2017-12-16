@@ -16,16 +16,16 @@ namespace DevOps.Primitives.VisualStudio.Projects
             MsBuildItem = item;
             MsBuildItemList = itemList;
         }
-        public MsBuildItemListAssociation(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null, MsBuildItemList itemList = null)
-            : this(new MsBuildItem(name, value, condition), itemList)
+        public MsBuildItemListAssociation(AsciiStringReference name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, MsBuildItemList itemList = null)
+            : this(new MsBuildItem(name, attributes, condition), itemList)
         {
         }
-        public MsBuildItemListAssociation(string name, string value, MsBuildCondition condition = null, MsBuildItemList itemList = null)
-            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition, itemList)
+        public MsBuildItemListAssociation(string name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, MsBuildItemList itemList = null)
+            : this(new AsciiStringReference(name), attributes, condition, itemList)
         {
         }
-        public MsBuildItemListAssociation(string name, string value, string condition = null, MsBuildItemList itemList = null)
-            : this(name, value, ConditionHelper.Create(condition), itemList)
+        public MsBuildItemListAssociation(string name, MsBuildItemAttributeList attributes, string condition = null, MsBuildItemList itemList = null)
+            : this(name, attributes, ConditionHelper.Create(condition), itemList)
         {
         }
 

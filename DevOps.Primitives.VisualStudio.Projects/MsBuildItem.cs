@@ -11,18 +11,18 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItem : IUniqueListRecord
     {
         public MsBuildItem() { }
-        public MsBuildItem(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null)
+        public MsBuildItem(AsciiStringReference name, MsBuildItemAttributeList attributeList, MsBuildCondition condition = null)
         {
             ElementName = name;
-            ElementValue = value;
             MsBuildCondition = condition;
+            MsBuildItemAttributeList = attributeList;
         }
-        public MsBuildItem(string name, string value, MsBuildCondition condition = null)
-            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition)
+        public MsBuildItem(string name, MsBuildItemAttributeList attributeList, MsBuildCondition condition = null)
+            : this(new AsciiStringReference(name), attributeList, condition)
         {
         }
-        public MsBuildItem(string name, string value, string condition = null)
-            : this(name, value, ConditionHelper.Create(condition))
+        public MsBuildItem(string name, MsBuildItemAttributeList attributeList, string condition = null)
+            : this(name, attributeList, ConditionHelper.Create(condition))
         {
         }
 
@@ -36,15 +36,15 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public int ElementNameId { get; set; }
 
         [ProtoMember(4)]
-        public AsciiStringReference ElementValue { get; set; }
-        [ProtoMember(5)]
-        public int ElementValueId { get; set; }
-
-        [ProtoMember(6)]
         public MsBuildCondition MsBuildCondition { get; set; }
-        [ProtoMember(7)]
+        [ProtoMember(5)]
         public int? MsBuildConditionId { get; set; }
 
-        public string GetItem() => $"<{ElementName.Value}{MsBuildCondition?.GetCondition()}>{ElementValue.Value}</{ElementName.Value}>";
+        [ProtoMember(6)]
+        public MsBuildItemAttributeList MsBuildItemAttributeList { get; set; }
+        [ProtoMember(7)]
+        public int MsBuildItemAttributeListId { get; set; }
+
+        public string GetItem() => $"<{ElementName.Value}{MsBuildCondition?.GetCondition()} {MsBuildItemAttributeList.GetItemAttributes()} />";
     }
 }

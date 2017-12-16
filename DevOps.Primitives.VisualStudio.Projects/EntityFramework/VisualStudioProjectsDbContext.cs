@@ -18,6 +18,9 @@ namespace DevOps.Primitives.VisualStudio.Projects.EntityFramework
         public DbSet<MsBuildConditionalConstructWhenElementList> MsBuildConditionalConstructWhenElementLists { get; set; }
         public DbSet<MsBuildConditionalConstructWhenElementListAssociation> MsBuildConditionalConstructWhenElementListAssociations { get; set; }
         public DbSet<MsBuildConditionalContructItemGroupPropertyGroupSection> MsBuildConditionalContructItemGroupPropertyGroupSections { get; set; }
+        public DbSet<MsBuildItemAttribute> MsBuildItemAttributes { get; set; }
+        public DbSet<MsBuildItemAttributeList> MsBuildItemAttributeLists { get; set; }
+        public DbSet<MsBuildItemAttributeListAssociation> MsBuildItemAttributeListAssociations { get; set; }
         public DbSet<MsBuildItem> MsBuildItems { get; set; }
         public DbSet<MsBuildItemGroup> MsBuildItemGroups { get; set; }
         public DbSet<MsBuildItemGroupList> MsBuildItemGroupLists { get; set; }
@@ -69,7 +72,7 @@ namespace DevOps.Primitives.VisualStudio.Projects.EntityFramework
             modelBuilder.Entity<MsBuildConditionalContructItemGroupPropertyGroupSection>()
                 .HasIndex(e => new { e.MsBuildConditionalConstructListId, e.MsBuildItemGroupListId, e.MsBuildPropertyGroupListId }).IsUnique();
             modelBuilder.Entity<MsBuildItem>()
-                .HasIndex(e => new { e.ElementNameId, e.ElementValueId, e.MsBuildConditionId }).IsUnique();
+                .HasIndex(e => new { e.ElementNameId, e.MsBuildConditionId, e.MsBuildItemAttributeListId }).IsUnique();
             modelBuilder.Entity<MsBuildItemGroup>()
                 .HasIndex(e => new { e.MsBuildConditionId, e.MsBuildItemListId }).IsUnique();
             modelBuilder.Entity<MsBuildItemGroupList>()

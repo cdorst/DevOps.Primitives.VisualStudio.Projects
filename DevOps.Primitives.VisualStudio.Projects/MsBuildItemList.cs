@@ -27,16 +27,16 @@ namespace DevOps.Primitives.VisualStudio.Projects
             : this(new MsBuildItemListAssociation(itemGroup), listIdentifier)
         {
         }
-        public MsBuildItemList(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItem(name, value, condition), listIdentifier)
+        public MsBuildItemList(AsciiStringReference name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItem(name, attributes, condition), listIdentifier)
         {
         }
-        public MsBuildItemList(string name, string value, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItem(name, value, condition), listIdentifier)
+        public MsBuildItemList(string name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItem(name, attributes, condition), listIdentifier)
         {
         }
-        public MsBuildItemList(string name, string value, string condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItem(name, value, condition), listIdentifier)
+        public MsBuildItemList(string name, MsBuildItemAttributeList attributes, string condition = null, AsciiStringReference listIdentifier = null)
+            : this(new MsBuildItem(name, attributes, condition), listIdentifier)
         {
         }
 
