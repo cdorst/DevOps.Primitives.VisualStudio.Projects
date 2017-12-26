@@ -10,6 +10,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildProjectFile
     {
         private const string Tag = "Project";
+        private const string XmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
 
         public MsBuildProjectFile() { }
         public MsBuildProjectFile(ProjectType projectType, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildTargetList targetList)
@@ -36,6 +37,14 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(6)]
         public int? MsBuildTargetListId { get; set; }
 
-        public string GetProjectFile() => $"<{Tag} {ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</{Tag}>";
+        public string GetProjectFile()
+            => ProjectType == ProjectType.MicrosoftNetSdk
+                ? GetProjectNode()
+                : $"{XmlHeader}{GetProjectNode()}";
+
+        private string GetProjectNode()
+            => $"<{Tag} {GetToolsVersion()}{ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</{Tag}>";
+
+        private string GetToolsVersion() => ProjectType == ProjectType.MicrosoftNetSdk ? string.Empty : "ToolsVersion=\"15.0\" ";
     }
 }
