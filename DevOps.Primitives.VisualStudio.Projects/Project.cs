@@ -33,5 +33,8 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public AsciiStringReference Name { get; set; }
         [ProtoMember(5)]
         public int NameId { get; set; }
+
+        public override string ToString()
+            => MsBuildProjectFile.GetProjectFile();
     }
 }
