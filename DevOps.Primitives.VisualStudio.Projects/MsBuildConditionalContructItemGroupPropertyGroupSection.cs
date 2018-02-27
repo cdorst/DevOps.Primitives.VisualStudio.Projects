@@ -35,6 +35,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int? MsBuildPropertyGroupListId { get; set; }
 
-        public string GetSection() => $"{MsBuildPropertyGroupList?.GetPropertyGroups()}{MsBuildItemGroupList.GetItemGroups()}{MsBuildConditionalConstructList?.GetConditionalConstructs()}";
+        public string GetSection() => $"{MsBuildPropertyGroupList?.GetPropertyGroups()}{MsBuildItemGroupList?.GetItemGroups()}{MsBuildConditionalConstructList?.GetConditionalConstructs()}";
     }
 }
