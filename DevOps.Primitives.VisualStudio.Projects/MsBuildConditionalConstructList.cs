@@ -47,7 +47,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public List<MsBuildConditionalConstructListAssociation> GetAssociations() => MsBuildConditionalConstructListAssociations;
 
         public string GetConditionalConstructs()
-            => string.Join(string.Empty,
+            => string.Join("\r\n\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetConditionalConstruct()));
 
         public void SetRecords(List<MsBuildConditionalConstruct> records)

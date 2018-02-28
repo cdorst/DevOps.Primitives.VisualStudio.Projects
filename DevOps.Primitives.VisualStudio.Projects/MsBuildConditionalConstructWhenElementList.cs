@@ -51,7 +51,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public List<MsBuildConditionalConstructWhenElementListAssociation> GetAssociations() => MsBuildConditionalConstructWhenElementListAssociations;
 
         public string GetWhenElements()
-            => string.Join(string.Empty,
+            => string.Join("\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetWhenElement()));
 
         public void SetRecords(List<MsBuildConditionalConstructWhenElement> records)

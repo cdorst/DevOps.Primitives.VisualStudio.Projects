@@ -51,7 +51,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public List<MsBuildItemGroupListAssociation> GetAssociations() => MsBuildItemGroupListAssociations;
 
         public string GetItemGroups()
-            => string.Join(string.Empty,
+            => string.Join("\r\n\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetItemGroup()));
 
         public void SetRecords(List<MsBuildItemGroup> records)

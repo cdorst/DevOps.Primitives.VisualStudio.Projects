@@ -32,6 +32,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildConditionalConstructWhenElementListId { get; set; }
 
-        public string GetConditionalConstruct() => $"<{Tag}>{MsBuildConditionalConstructWhenElementList.GetWhenElements()}{MsBuildConditionalConstructOtherwiseElement?.GetOtherwiseElement()}</{Tag}>";
+        public string GetConditionalConstruct() => $"    <{Tag}>{MsBuildConditionalConstructWhenElementList.GetWhenElements()}{MsBuildConditionalConstructOtherwiseElement?.GetOtherwiseElement()}</{Tag}>";
     }
 }

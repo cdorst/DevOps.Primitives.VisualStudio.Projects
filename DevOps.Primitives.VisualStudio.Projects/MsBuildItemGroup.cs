@@ -36,6 +36,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(3)]
         public int MsBuildItemListId { get; set; }
 
-        public string GetItemGroup() => $"<{Tag}{MsBuildCondition?.GetCondition()}>{MsBuildItemList.GetItems()}</{Tag}>";
+        public string GetItemGroup() => $"    <{Tag}{MsBuildCondition?.GetCondition()}>{MsBuildItemList.GetItems()}</{Tag}>";
     }
 }

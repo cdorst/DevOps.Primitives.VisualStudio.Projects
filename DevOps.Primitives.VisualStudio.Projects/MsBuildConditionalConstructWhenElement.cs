@@ -36,6 +36,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildConditionalContructItemGroupPropertyGroupSectionId { get; set; }
 
-        public string GetWhenElement() => $"<{Tag}{MsBuildCondition.GetCondition()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</{Tag}>";
+        public string GetWhenElement() => $"        <{Tag}{MsBuildCondition.GetCondition()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</{Tag}>";
     }
 }
