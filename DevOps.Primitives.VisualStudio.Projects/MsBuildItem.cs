@@ -45,6 +45,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int MsBuildItemAttributeListId { get; set; }
 
-        public string GetItem() => $"        <{ElementName.Value}{MsBuildCondition?.GetCondition()} {MsBuildItemAttributeList.GetItemAttributes()} />";
+        public string GetItem() => $"    <{ElementName.Value}{MsBuildCondition?.GetCondition()} {MsBuildItemAttributeList.GetItemAttributes()} />";
     }
 }

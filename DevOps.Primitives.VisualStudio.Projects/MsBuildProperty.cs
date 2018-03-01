@@ -45,6 +45,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int ElementValueId { get; set; }
 
-        public string GetProperty() => $"        <{ElementName.Value}{MsBuildCondition?.GetCondition()}>{ElementValue.Value}</{ElementName.Value}>";
+        public string GetProperty() => $"    <{ElementName.Value}{MsBuildCondition?.GetCondition()}>{ElementValue.Value}</{ElementName.Value}>";
     }
 }

@@ -43,7 +43,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
                 : $"{XmlHeader}{GetProjectNode()}";
 
         private string GetProjectNode()
-            => $"<{Tag} {GetToolsVersion()}{ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</{Tag}>";
+            => $"<{Tag} {GetToolsVersion()}{ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</{Tag}>\r\n";
 
         private string GetToolsVersion() => ProjectType == ProjectType.MicrosoftNetSdk ? string.Empty : "ToolsVersion=\"15.0\" ";
     }
