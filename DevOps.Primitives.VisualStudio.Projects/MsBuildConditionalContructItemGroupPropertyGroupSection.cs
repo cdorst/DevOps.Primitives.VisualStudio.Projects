@@ -41,7 +41,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
             var properties = MsBuildPropertyGroupList?.GetPropertyGroups();
             var items = MsBuildItemGroupList?.GetItemGroups();
             var propItemSpace = (!string.IsNullOrEmpty(properties) && !string.IsNullOrEmpty(items)) ? doubleReturn : string.Empty;
-            return $"{doubleReturn}{properties}{items}{propItemSpace}{MsBuildConditionalConstructList?.GetConditionalConstructs()}{doubleReturn}";
+            return $"{doubleReturn}{properties}{propItemSpace}{items}{MsBuildConditionalConstructList?.GetConditionalConstructs()}{doubleReturn}";
         }
     }
 }
