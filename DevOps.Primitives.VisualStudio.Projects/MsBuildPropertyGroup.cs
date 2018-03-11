@@ -9,7 +9,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildPropertyGroups", Schema = nameof(VisualStudio))]
     public class MsBuildPropertyGroup : IUniqueListRecord
     {
-        private const string Tag = "ProjectGroup";
+        private const string Tag = "PropertyGroup";
 
         public MsBuildPropertyGroup() { }
         public MsBuildPropertyGroup(MsBuildPropertyList propertyList, MsBuildCondition condition = null)
