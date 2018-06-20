@@ -1,8 +1,10 @@
-﻿namespace DevOps.Primitives.VisualStudio.Projects
+﻿using static System.String;
+
+namespace DevOps.Primitives.VisualStudio.Projects
 {
     internal static class ConditionHelper
     {
-        public static MsBuildCondition Create(string condition)
-            => !string .IsNullOrWhiteSpace(condition) ? new MsBuildCondition(condition) : null;
+        public static MsBuildCondition Create(in string condition)
+            => IsNullOrWhiteSpace(condition) ? null : new MsBuildCondition(in condition);
     }
 }

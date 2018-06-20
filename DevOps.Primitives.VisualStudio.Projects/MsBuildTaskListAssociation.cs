@@ -11,17 +11,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTaskListAssociation : IUniqueListAssociation<MsBuildTask>
     {
         public MsBuildTaskListAssociation() { }
-        public MsBuildTaskListAssociation(MsBuildTask buildTask, MsBuildTaskList buildTaskList = null)
+        public MsBuildTaskListAssociation(in MsBuildTask buildTask, in MsBuildTaskList buildTaskList = default)
         {
             MsBuildTask = buildTask;
             MsBuildTaskList = buildTaskList;
         }
-        public MsBuildTaskListAssociation(AsciiStringReference element, MsBuildTaskAttributeList taskAttributeList, MsBuildTaskList buildTaskList = null)
-            : this(new MsBuildTask(element, taskAttributeList), buildTaskList)
+        public MsBuildTaskListAssociation(in AsciiStringReference element, in MsBuildTaskAttributeList taskAttributeList, in MsBuildTaskList buildTaskList = default)
+            : this(new MsBuildTask(in element, in taskAttributeList), in buildTaskList)
         {
         }
-        public MsBuildTaskListAssociation(string element, MsBuildTaskAttributeList taskAttributeList, MsBuildTaskList buildTaskList = null)
-            : this(new MsBuildTask(element, taskAttributeList), buildTaskList)
+        public MsBuildTaskListAssociation(in string element, in MsBuildTaskAttributeList taskAttributeList, in MsBuildTaskList buildTaskList = default)
+            : this(new MsBuildTask(in element, in taskAttributeList), in buildTaskList)
         {
         }
 
@@ -41,10 +41,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildTask GetRecord() => MsBuildTask;
 
-        public void SetRecord(MsBuildTask record)
+        public void SetRecord(in MsBuildTask record)
         {
             MsBuildTask = record;
-            MsBuildTaskId = MsBuildTask.MsBuildTaskId;
+            MsBuildTaskId = record.MsBuildTaskId;
         }
     }
 }

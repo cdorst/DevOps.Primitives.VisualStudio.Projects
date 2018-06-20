@@ -3,6 +3,7 @@ using DevOps.Primitives.Strings;
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -11,18 +12,27 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItem : IUniqueListRecord
     {
         public MsBuildItem() { }
-        public MsBuildItem(AsciiStringReference name, MsBuildItemAttributeList attributeList, MsBuildCondition condition = null)
+        public MsBuildItem(
+            in AsciiStringReference name,
+            in MsBuildItemAttributeList attributeList,
+            in MsBuildCondition condition = default)
         {
             ElementName = name;
             MsBuildCondition = condition;
             MsBuildItemAttributeList = attributeList;
         }
-        public MsBuildItem(string name, MsBuildItemAttributeList attributeList, MsBuildCondition condition = null)
-            : this(new AsciiStringReference(name), attributeList, condition)
+        public MsBuildItem(
+            in string name,
+            in MsBuildItemAttributeList attributeList,
+            in MsBuildCondition condition = default)
+            : this(new AsciiStringReference(in name), in attributeList, in condition)
         {
         }
-        public MsBuildItem(string name, MsBuildItemAttributeList attributeList, string condition = null)
-            : this(name, attributeList, ConditionHelper.Create(condition))
+        public MsBuildItem(
+            in string name,
+            in MsBuildItemAttributeList attributeList,
+            in string condition = default)
+            : this(in name, in attributeList, ConditionHelper.Create(in condition))
         {
         }
 
@@ -45,6 +55,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int MsBuildItemAttributeListId { get; set; }
 
-        public string GetItem() => $"    <{ElementName.Value}{MsBuildCondition?.GetCondition()} {MsBuildItemAttributeList.GetItemAttributes()} />";
+        public string GetItem()
+            => Concat("    <", ElementName.Value, MsBuildCondition?.GetCondition(), " ", MsBuildItemAttributeList.GetItemAttributes(), " />");
     }
 }

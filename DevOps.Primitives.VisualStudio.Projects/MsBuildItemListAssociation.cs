@@ -11,21 +11,35 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemListAssociation : IUniqueListAssociation<MsBuildItem>
     {
         public MsBuildItemListAssociation() { }
-        public MsBuildItemListAssociation(MsBuildItem item, MsBuildItemList itemList = null)
+        public MsBuildItemListAssociation(
+            in MsBuildItem item,
+            in MsBuildItemList itemList = default)
         {
             MsBuildItem = item;
             MsBuildItemList = itemList;
         }
-        public MsBuildItemListAssociation(AsciiStringReference name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, MsBuildItemList itemList = null)
-            : this(new MsBuildItem(name, attributes, condition), itemList)
+        public MsBuildItemListAssociation(
+            in AsciiStringReference name,
+            in MsBuildItemAttributeList attributes,
+            in MsBuildCondition condition = default,
+            in MsBuildItemList itemList = default)
+            : this(new MsBuildItem(in name, in attributes, in condition), in itemList)
         {
         }
-        public MsBuildItemListAssociation(string name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, MsBuildItemList itemList = null)
-            : this(new AsciiStringReference(name), attributes, condition, itemList)
+        public MsBuildItemListAssociation(
+            in string name,
+            in MsBuildItemAttributeList attributes,
+            in MsBuildCondition condition = default,
+            in MsBuildItemList itemList = default)
+            : this(new AsciiStringReference(in name), in attributes, in condition, in itemList)
         {
         }
-        public MsBuildItemListAssociation(string name, MsBuildItemAttributeList attributes, string condition = null, MsBuildItemList itemList = null)
-            : this(name, attributes, ConditionHelper.Create(condition), itemList)
+        public MsBuildItemListAssociation(
+            in string name,
+            in MsBuildItemAttributeList attributes,
+            in string condition = default,
+            in MsBuildItemList itemList = default)
+            : this(in name, in attributes, ConditionHelper.Create(in condition), in itemList)
         {
         }
 
@@ -45,10 +59,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildItem GetRecord() => MsBuildItem;
 
-        public void SetRecord(MsBuildItem record)
+        public void SetRecord(in MsBuildItem record)
         {
             MsBuildItem = record;
-            MsBuildItemId = MsBuildItem.MsBuildItemId;
+            MsBuildItemId = record.MsBuildItemId;
         }
     }
 }

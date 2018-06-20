@@ -3,6 +3,7 @@ using DevOps.Primitives.Strings;
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -11,13 +12,15 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemAttribute : IUniqueListRecord
     {
         public MsBuildItemAttribute() { }
-        public MsBuildItemAttribute(AsciiStringReference attribute, AsciiStringReference value)
+        public MsBuildItemAttribute(
+            in AsciiStringReference attribute,
+            in AsciiStringReference value)
         {
             Attribute = attribute;
             Value = value;
         }
-        public MsBuildItemAttribute(string attribute, string value)
-            : this(new AsciiStringReference(attribute), new AsciiStringReference(value))
+        public MsBuildItemAttribute(in string attribute, in string value)
+            : this(new AsciiStringReference(in attribute), new AsciiStringReference(in value))
         {
         }
 
@@ -35,6 +38,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int ValueId { get; set; }
 
-        public string GetItemAttribute() => $"{Attribute.Value}=\"{Value.Value}\"";
+        public string GetItemAttribute() => Concat(Attribute.Value, "=\"", Value.Value, "\"");
     }
 }

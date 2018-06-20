@@ -1,6 +1,7 @@
 ﻿using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -9,7 +10,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildConditionalContructItemGroupPropertyGroupSection
     {
         public MsBuildConditionalContructItemGroupPropertyGroupSection() { }
-        public MsBuildConditionalContructItemGroupPropertyGroupSection(MsBuildPropertyGroupList propertyGroupList, MsBuildItemGroupList itemGroupList, MsBuildConditionalConstructList conditionalConstructList)
+        public MsBuildConditionalContructItemGroupPropertyGroupSection(
+            in MsBuildPropertyGroupList propertyGroupList,
+            in MsBuildItemGroupList itemGroupList,
+            in MsBuildConditionalConstructList conditionalConstructList)
         {
             MsBuildConditionalConstructList = conditionalConstructList;
             MsBuildItemGroupList = itemGroupList;
@@ -40,8 +44,8 @@ namespace DevOps.Primitives.VisualStudio.Projects
             var doubleReturn = "\r\n\r\n";
             var properties = MsBuildPropertyGroupList?.GetPropertyGroups();
             var items = MsBuildItemGroupList?.GetItemGroups();
-            var propItemSpace = (!string.IsNullOrEmpty(properties) && !string.IsNullOrEmpty(items)) ? doubleReturn : string.Empty;
-            return $"{doubleReturn}{properties}{propItemSpace}{items}{MsBuildConditionalConstructList?.GetConditionalConstructs()}{doubleReturn}";
+            var propItemSpace = (!IsNullOrEmpty(properties) && !IsNullOrEmpty(items)) ? doubleReturn : Empty;
+            return Concat(doubleReturn, properties, propItemSpace, items, MsBuildConditionalConstructList?.GetConditionalConstructs(), doubleReturn);
         }
     }
 }

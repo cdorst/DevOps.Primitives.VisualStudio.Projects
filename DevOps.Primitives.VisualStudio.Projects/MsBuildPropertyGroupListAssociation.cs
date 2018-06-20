@@ -10,17 +10,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildPropertyGroupListAssociation : IUniqueListAssociation<MsBuildPropertyGroup>
     {
         public MsBuildPropertyGroupListAssociation() { }
-        public MsBuildPropertyGroupListAssociation(MsBuildPropertyGroup propertyGroup, MsBuildPropertyGroupList propertyGroupList = null)
+        public MsBuildPropertyGroupListAssociation(
+            in MsBuildPropertyGroup propertyGroup,
+            in MsBuildPropertyGroupList propertyGroupList = default)
         {
             MsBuildPropertyGroup = propertyGroup;
             MsBuildPropertyGroupList = propertyGroupList;
         }
-        public MsBuildPropertyGroupListAssociation(MsBuildPropertyList propertyList, MsBuildCondition condition = null, MsBuildPropertyGroupList propertyGroupList = null)
-            : this(new MsBuildPropertyGroup(propertyList, condition), propertyGroupList)
+        public MsBuildPropertyGroupListAssociation(
+            in MsBuildPropertyList propertyList,
+            in MsBuildCondition condition = default,
+            in MsBuildPropertyGroupList propertyGroupList = default)
+            : this(new MsBuildPropertyGroup(in propertyList, in condition), in propertyGroupList)
         {
         }
-        public MsBuildPropertyGroupListAssociation(MsBuildPropertyList propertyList, string condition = null, MsBuildPropertyGroupList propertyGroupList = null)
-            : this(propertyList, ConditionHelper.Create(condition), propertyGroupList)
+        public MsBuildPropertyGroupListAssociation(
+            in MsBuildPropertyList propertyList,
+            in string condition = default,
+            in MsBuildPropertyGroupList propertyGroupList = default)
+            : this(in propertyList, ConditionHelper.Create(in condition), in propertyGroupList)
         {
         }
 
@@ -40,10 +48,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildPropertyGroup GetRecord() => MsBuildPropertyGroup;
 
-        public void SetRecord(MsBuildPropertyGroup record)
+        public void SetRecord(in MsBuildPropertyGroup record)
         {
             MsBuildPropertyGroup = record;
-            MsBuildPropertyGroupId = MsBuildPropertyGroup.MsBuildPropertyGroupId;
+            MsBuildPropertyGroupId = record.MsBuildPropertyGroupId;
         }
     }
 }

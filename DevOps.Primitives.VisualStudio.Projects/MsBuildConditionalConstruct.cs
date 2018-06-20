@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -12,7 +13,9 @@ namespace DevOps.Primitives.VisualStudio.Projects
         private const string Tag = "Choose";
 
         public MsBuildConditionalConstruct() { }
-        public MsBuildConditionalConstruct(MsBuildConditionalConstructWhenElementList whenElementList, MsBuildConditionalConstructOtherwiseElement otherwiseElement = null)
+        public MsBuildConditionalConstruct(
+            in MsBuildConditionalConstructWhenElementList whenElementList,
+            in MsBuildConditionalConstructOtherwiseElement otherwiseElement = default)
         {
             MsBuildConditionalConstructWhenElementList = whenElementList;
             MsBuildConditionalConstructOtherwiseElement = otherwiseElement;
@@ -32,6 +35,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildConditionalConstructWhenElementListId { get; set; }
 
-        public string GetConditionalConstruct() => $"    <{Tag}>{MsBuildConditionalConstructWhenElementList.GetWhenElements()}{MsBuildConditionalConstructOtherwiseElement?.GetOtherwiseElement()}</{Tag}>";
+        public string GetConditionalConstruct()
+            => Concat("    <", Tag, ">", MsBuildConditionalConstructWhenElementList.GetWhenElements(), MsBuildConditionalConstructOtherwiseElement?.GetOtherwiseElement(), "</", Tag, ">");
     }
 }

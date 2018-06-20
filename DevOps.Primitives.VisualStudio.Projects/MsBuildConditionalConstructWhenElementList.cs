@@ -14,25 +14,27 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildConditionalConstructWhenElementList : IUniqueList<MsBuildConditionalConstructWhenElement, MsBuildConditionalConstructWhenElementListAssociation>
     {
         public MsBuildConditionalConstructWhenElementList() { }
-        public MsBuildConditionalConstructWhenElementList(List<MsBuildConditionalConstructWhenElementListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildConditionalConstructWhenElementList(
+            in List<MsBuildConditionalConstructWhenElementListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildConditionalConstructWhenElementListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElementListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildConditionalConstructWhenElementListAssociation> { associations }, listIdentifier)
+        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElementListAssociation associations, AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildConditionalConstructWhenElementListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElement whenElement, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildConditionalConstructWhenElementListAssociation(whenElement), listIdentifier)
+        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElement whenElement, AsciiStringReference listIdentifier = default)
+            : this(new MsBuildConditionalConstructWhenElementListAssociation(in whenElement), in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructWhenElementList(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildConditionalConstructWhenElement(condition, content), listIdentifier)
+        public MsBuildConditionalConstructWhenElementList(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = default)
+            : this(new MsBuildConditionalConstructWhenElement(in condition, in content), in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructWhenElementList(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildConditionalConstructWhenElement(condition, content), listIdentifier)
+        public MsBuildConditionalConstructWhenElementList(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = default)
+            : this(new MsBuildConditionalConstructWhenElement(in condition, in content), in listIdentifier)
         {
         }
 
@@ -54,11 +56,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join("\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetWhenElement()));
 
-        public void SetRecords(List<MsBuildConditionalConstructWhenElement> records)
+        public void SetRecords(in List<MsBuildConditionalConstructWhenElement> records)
         {
-            MsBuildConditionalConstructWhenElementListAssociations = UniqueListAssociationsFactory<MsBuildConditionalConstructWhenElement, MsBuildConditionalConstructWhenElementListAssociation>.Create(records);
+            MsBuildConditionalConstructWhenElementListAssociations = UniqueListAssociationsFactory<MsBuildConditionalConstructWhenElement, MsBuildConditionalConstructWhenElementListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildConditionalConstructWhenElement>.Create(records, r => r.MsBuildConditionalConstructWhenElementId));
+                UniqueListIdentifierFactory<MsBuildConditionalConstructWhenElement>.Create(in records, r => r.MsBuildConditionalConstructWhenElementId));
         }
     }
 }

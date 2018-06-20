@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
@@ -7,13 +7,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>CDorst.DevOps.Primitives.VisualStudio.Projects</PackageId>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.1.6</Version>
+    <Version>3.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CDorst.Common.EnumStringValues" Version="2.0.0" />
     <PackageReference Include="CDorst.Common.StringExtensions" Version="1.0.0" />
-    <PackageReference Include="CDorst.DevOps.Primitives.Strings" Version="2.0.0" />
+    <PackageReference Include="CDorst.DevOps.Primitives.Strings" Version="3.0.1" />
   </ItemGroup>
 
 </Project>

@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -12,13 +13,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
         private const string Tag = "ItemGroup";
 
         public MsBuildItemGroup() { }
-        public MsBuildItemGroup(MsBuildItemList itemList, MsBuildCondition condition = null)
+        public MsBuildItemGroup(
+            in MsBuildItemList itemList,
+            in MsBuildCondition condition = default)
         {
             MsBuildCondition = condition;
             MsBuildItemList = itemList;
         }
-        public MsBuildItemGroup(MsBuildItemList itemList, string condition = null)
-            : this(itemList, ConditionHelper.Create(condition))
+        public MsBuildItemGroup(
+            in MsBuildItemList itemList,
+            in string condition = default)
+            : this(in itemList, ConditionHelper.Create(in condition))
         {
         }
 
@@ -36,6 +41,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(3)]
         public int MsBuildItemListId { get; set; }
 
-        public string GetItemGroup() => $"  <{Tag}{MsBuildCondition?.GetCondition()}>\r\n{MsBuildItemList.GetItems()}\r\n  </{Tag}>";
+        public string GetItemGroup()
+            => Concat("  <", Tag, MsBuildCondition?.GetCondition(), ">\r\n", MsBuildItemList.GetItems(), "\r\n  </", Tag, ">");
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -14,21 +15,21 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTaskList : IUniqueList<MsBuildTask, MsBuildTaskListAssociation>
     {
         public MsBuildTaskList() { }
-        public MsBuildTaskList(List<MsBuildTaskListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildTaskList(in List<MsBuildTaskListAssociation> associations, in AsciiStringReference listIdentifier = default)
         {
             MsBuildTaskListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildTaskList(MsBuildTaskListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildTaskListAssociation> { associations }, listIdentifier)
+        public MsBuildTaskList(in MsBuildTaskListAssociation associations, in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildTaskListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildTaskList(MsBuildTask task, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTaskListAssociation(task), listIdentifier)
+        public MsBuildTaskList(in MsBuildTask task, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTaskListAssociation(in task), in listIdentifier)
         {
         }
-        public MsBuildTaskList(AsciiStringReference element, MsBuildTaskAttributeList taskAttributeList, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTask(element, taskAttributeList), listIdentifier)
+        public MsBuildTaskList(in AsciiStringReference element, in MsBuildTaskAttributeList taskAttributeList, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTask(in element, in taskAttributeList), in listIdentifier)
         {
         }
 
@@ -47,14 +48,13 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public List<MsBuildTaskListAssociation> GetAssociations() => MsBuildTaskListAssociations;
 
         public string GetTasks()
-            => string.Join(string.Empty,
-                GetAssociations().Select(each => each.GetRecord().GetTask()));
+            => Join(Empty, GetAssociations().Select(each => each.GetRecord().GetTask()));
 
-        public void SetRecords(List<MsBuildTask> records)
+        public void SetRecords(in List<MsBuildTask> records)
         {
-            MsBuildTaskListAssociations = UniqueListAssociationsFactory<MsBuildTask, MsBuildTaskListAssociation>.Create(records);
+            MsBuildTaskListAssociations = UniqueListAssociationsFactory<MsBuildTask, MsBuildTaskListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildTask>.Create(records, r => r.MsBuildTaskId));
+                UniqueListIdentifierFactory<MsBuildTask>.Create(in records, r => r.MsBuildTaskId));
         }
     }
 }

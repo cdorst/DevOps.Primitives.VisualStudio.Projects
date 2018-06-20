@@ -3,6 +3,7 @@ using DevOps.Primitives.Strings;
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -11,13 +12,13 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTask : IUniqueListRecord
     {
         public MsBuildTask() { }
-        public MsBuildTask(AsciiStringReference element, MsBuildTaskAttributeList taskAttributeList)
+        public MsBuildTask(in AsciiStringReference element, in MsBuildTaskAttributeList taskAttributeList)
         {
             Element = element;
             MsBuildTaskAttributeList = taskAttributeList;
         }
-        public MsBuildTask(string element, MsBuildTaskAttributeList taskAttributeList)
-            : this(new AsciiStringReference(element), taskAttributeList)
+        public MsBuildTask(in string element, in MsBuildTaskAttributeList taskAttributeList)
+            : this(new AsciiStringReference(in element), in taskAttributeList)
         {
         }
 
@@ -35,6 +36,6 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildTaskAttributeListId { get; set; }
 
-        public string GetTask() => $"<{Element.Value} {MsBuildTaskAttributeList.GetTaskAttributes()} />";
+        public string GetTask() => Concat("<", Element.Value, " ", MsBuildTaskAttributeList.GetTaskAttributes(), " />");
     }
 }

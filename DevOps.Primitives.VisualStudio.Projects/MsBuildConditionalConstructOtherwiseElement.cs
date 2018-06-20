@@ -1,6 +1,7 @@
 ﻿using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -11,7 +12,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         private const string Tag = "Otherwise";
 
         public MsBuildConditionalConstructOtherwiseElement() { }
-        public MsBuildConditionalConstructOtherwiseElement(MsBuildConditionalContructItemGroupPropertyGroupSection content)
+        public MsBuildConditionalConstructOtherwiseElement(in MsBuildConditionalContructItemGroupPropertyGroupSection content)
         {
             MsBuildConditionalContructItemGroupPropertyGroupSection = content;
         }
@@ -25,6 +26,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(3)]
         public int MsBuildConditionalContructItemGroupPropertyGroupSectionId { get; set; }
 
-        public string GetOtherwiseElement() => $"<{Tag}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</{Tag}>";
+        public string GetOtherwiseElement()
+            => Concat("<", Tag, ">", MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection(), "</", Tag, ">");
     }
 }

@@ -11,17 +11,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTargetListAssociation : IUniqueListAssociation<MsBuildTarget>
     {
         public MsBuildTargetListAssociation() { }
-        public MsBuildTargetListAssociation(MsBuildTarget target, MsBuildTargetList targetList = null)
+        public MsBuildTargetListAssociation(in MsBuildTarget target, in MsBuildTargetList targetList = default)
         {
             MsBuildTarget = target;
             MsBuildTargetList = targetList;
         }
-        public MsBuildTargetListAssociation(MsBuildTaskList taskList, AsciiStringReference name, AsciiStringReference outputs = null, MsBuildTargetList targetList = null)
-            : this(new MsBuildTarget(taskList, name, outputs), targetList)
+        public MsBuildTargetListAssociation(in MsBuildTaskList taskList, in AsciiStringReference name, in AsciiStringReference outputs = default, in MsBuildTargetList targetList = default)
+            : this(new MsBuildTarget(in taskList, in name, in outputs), in targetList)
         {
         }
-        public MsBuildTargetListAssociation(MsBuildTaskList taskList, string name, string outputs = null, MsBuildTargetList targetList = null)
-            : this(new MsBuildTarget(taskList, name, outputs), targetList)
+        public MsBuildTargetListAssociation(in MsBuildTaskList taskList, in string name, in string outputs = default, in MsBuildTargetList targetList = default)
+            : this(new MsBuildTarget(in taskList, in name, in outputs), in targetList)
         {
         }
 
@@ -41,10 +41,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildTarget GetRecord() => MsBuildTarget;
 
-        public void SetRecord(MsBuildTarget record)
+        public void SetRecord(in MsBuildTarget record)
         {
             MsBuildTarget = record;
-            MsBuildTargetId = MsBuildTarget.MsBuildTargetId;
+            MsBuildTargetId = record.MsBuildTargetId;
         }
     }
 }

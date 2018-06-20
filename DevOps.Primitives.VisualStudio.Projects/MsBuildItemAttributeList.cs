@@ -14,25 +14,37 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemAttributeList : IUniqueList<MsBuildItemAttribute, MsBuildItemAttributeListAssociation>
     {
         public MsBuildItemAttributeList() { }
-        public MsBuildItemAttributeList(List<MsBuildItemAttributeListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildItemAttributeList(
+            in List<MsBuildItemAttributeListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildItemAttributeListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildItemAttributeList(MsBuildItemAttributeListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildItemAttributeListAssociation> { associations }, listIdentifier)
+        public MsBuildItemAttributeList(
+            in MsBuildItemAttributeListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildItemAttributeListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildItemAttributeList(MsBuildItemAttribute itemAttribute, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemAttributeListAssociation(itemAttribute), listIdentifier)
+        public MsBuildItemAttributeList(
+            in MsBuildItemAttribute itemAttribute,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemAttributeListAssociation(in itemAttribute), in listIdentifier)
         {
         }
-        public MsBuildItemAttributeList(AsciiStringReference attribute, AsciiStringReference value, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemAttribute(attribute, value), listIdentifier)
+        public MsBuildItemAttributeList(
+            in AsciiStringReference attribute,
+            in AsciiStringReference value,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemAttribute(in attribute, in value), in listIdentifier)
         {
         }
-        public MsBuildItemAttributeList(string attribute, string value, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemAttribute(attribute, value), listIdentifier)
+        public MsBuildItemAttributeList(
+            in string attribute,
+            in string value,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemAttribute(in attribute, in value), in listIdentifier)
         {
         }
 
@@ -54,11 +66,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join(" ",
                 GetAssociations().Select(each => each.GetRecord().GetItemAttribute()));
 
-        public void SetRecords(List<MsBuildItemAttribute> records)
+        public void SetRecords(in List<MsBuildItemAttribute> records)
         {
-            MsBuildItemAttributeListAssociations = UniqueListAssociationsFactory<MsBuildItemAttribute, MsBuildItemAttributeListAssociation>.Create(records);
+            MsBuildItemAttributeListAssociations = UniqueListAssociationsFactory<MsBuildItemAttribute, MsBuildItemAttributeListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildItemAttribute>.Create(records, r => r.MsBuildItemAttributeId));
+                UniqueListIdentifierFactory<MsBuildItemAttribute>.Create(in records, r => r.MsBuildItemAttributeId));
         }
     }
 }

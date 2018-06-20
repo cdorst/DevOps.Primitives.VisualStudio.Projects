@@ -10,17 +10,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemGroupListAssociation : IUniqueListAssociation<MsBuildItemGroup>
     {
         public MsBuildItemGroupListAssociation() { }
-        public MsBuildItemGroupListAssociation(MsBuildItemGroup itemGroup, MsBuildItemGroupList itemGroupList = null)
+        public MsBuildItemGroupListAssociation(
+            in MsBuildItemGroup itemGroup,
+            in MsBuildItemGroupList itemGroupList = default)
         {
             MsBuildItemGroup = itemGroup;
             MsBuildItemGroupList = itemGroupList;
         }
-        public MsBuildItemGroupListAssociation(MsBuildItemList itemList, MsBuildCondition condition = null, MsBuildItemGroupList itemGroupList = null)
-            : this(new MsBuildItemGroup(itemList, condition), itemGroupList)
+        public MsBuildItemGroupListAssociation(
+            in MsBuildItemList itemList,
+            in MsBuildCondition condition = default,
+            in MsBuildItemGroupList itemGroupList = default)
+            : this(new MsBuildItemGroup(in itemList, in condition), in itemGroupList)
         {
         }
-        public MsBuildItemGroupListAssociation(MsBuildItemList itemList, string condition = null, MsBuildItemGroupList itemGroupList = null)
-            : this(itemList, ConditionHelper.Create(condition), itemGroupList)
+        public MsBuildItemGroupListAssociation(
+            MsBuildItemList itemList,
+            string condition = default,
+            MsBuildItemGroupList itemGroupList = default)
+            : this(in itemList, ConditionHelper.Create(in condition), in itemGroupList)
         {
         }
 
@@ -40,10 +48,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildItemGroup GetRecord() => MsBuildItemGroup;
 
-        public void SetRecord(MsBuildItemGroup record)
+        public void SetRecord(in MsBuildItemGroup record)
         {
             MsBuildItemGroup = record;
-            MsBuildItemGroupId = MsBuildItemGroup.MsBuildItemGroupId;
+            MsBuildItemGroupId = record.MsBuildItemGroupId;
         }
     }
 }

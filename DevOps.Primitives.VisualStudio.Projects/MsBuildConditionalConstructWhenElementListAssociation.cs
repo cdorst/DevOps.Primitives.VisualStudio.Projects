@@ -10,17 +10,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildConditionalConstructWhenElementListAssociation : IUniqueListAssociation<MsBuildConditionalConstructWhenElement>
     {
         public MsBuildConditionalConstructWhenElementListAssociation() { }
-        public MsBuildConditionalConstructWhenElementListAssociation(MsBuildConditionalConstructWhenElement whenElement, MsBuildConditionalConstructWhenElementList whenElementList = null)
+        public MsBuildConditionalConstructWhenElementListAssociation(
+            in MsBuildConditionalConstructWhenElement whenElement,
+            in MsBuildConditionalConstructWhenElementList whenElementList = default)
         {
             MsBuildConditionalConstructWhenElement = whenElement;
             MsBuildConditionalConstructWhenElementList = whenElementList;
         }
-        public MsBuildConditionalConstructWhenElementListAssociation(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildConditionalConstructWhenElementList whenElementList = null)
-            : this(new MsBuildConditionalConstructWhenElement(condition, content), whenElementList)
+        public MsBuildConditionalConstructWhenElementListAssociation(
+            in MsBuildCondition condition,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content,
+            in MsBuildConditionalConstructWhenElementList whenElementList = default)
+            : this(new MsBuildConditionalConstructWhenElement(in condition, in content), in whenElementList)
         {
         }
-        public MsBuildConditionalConstructWhenElementListAssociation(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildConditionalConstructWhenElementList whenElementList = null)
-            : this(new MsBuildCondition(condition), content, whenElementList)
+        public MsBuildConditionalConstructWhenElementListAssociation(
+            in string condition,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content,
+            in MsBuildConditionalConstructWhenElementList whenElementList = default)
+            : this(new MsBuildCondition(in condition), in content, in whenElementList)
         {
         }
 
@@ -40,10 +48,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildConditionalConstructWhenElement GetRecord() => MsBuildConditionalConstructWhenElement;
 
-        public void SetRecord(MsBuildConditionalConstructWhenElement record)
+        public void SetRecord(in MsBuildConditionalConstructWhenElement record)
         {
             MsBuildConditionalConstructWhenElement = record;
-            MsBuildConditionalConstructWhenElementId = MsBuildConditionalConstructWhenElement.MsBuildConditionalConstructWhenElementId;
+            MsBuildConditionalConstructWhenElementId = record.MsBuildConditionalConstructWhenElementId;
         }
     }
 }

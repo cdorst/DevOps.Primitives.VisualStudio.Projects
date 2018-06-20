@@ -14,21 +14,30 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildConditionalConstructList : IUniqueList<MsBuildConditionalConstruct, MsBuildConditionalConstructListAssociation>
     {
         public MsBuildConditionalConstructList() { }
-        public MsBuildConditionalConstructList(List<MsBuildConditionalConstructListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildConditionalConstructList(
+            in List<MsBuildConditionalConstructListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildConditionalConstructListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildConditionalConstructList(MsBuildConditionalConstructListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildConditionalConstructListAssociation> { associations }, listIdentifier)
+        public MsBuildConditionalConstructList(
+            in MsBuildConditionalConstructListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildConditionalConstructListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructList(MsBuildConditionalConstruct construct, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildConditionalConstructListAssociation(construct), listIdentifier)
+        public MsBuildConditionalConstructList(
+            in MsBuildConditionalConstruct construct,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildConditionalConstructListAssociation(in construct), in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructList(MsBuildConditionalConstructWhenElementList whenElementList, MsBuildConditionalConstructOtherwiseElement otherwiseElement = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildConditionalConstruct(whenElementList, otherwiseElement), listIdentifier)
+        public MsBuildConditionalConstructList(
+            in MsBuildConditionalConstructWhenElementList whenElementList,
+            in MsBuildConditionalConstructOtherwiseElement otherwiseElement = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildConditionalConstruct(in whenElementList, in otherwiseElement), in listIdentifier)
         {
         }
 
@@ -50,11 +59,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join("\r\n\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetConditionalConstruct()));
 
-        public void SetRecords(List<MsBuildConditionalConstruct> records)
+        public void SetRecords(in List<MsBuildConditionalConstruct> records)
         {
-            MsBuildConditionalConstructListAssociations = UniqueListAssociationsFactory<MsBuildConditionalConstruct, MsBuildConditionalConstructListAssociation>.Create(records);
+            MsBuildConditionalConstructListAssociations = UniqueListAssociationsFactory<MsBuildConditionalConstruct, MsBuildConditionalConstructListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildConditionalConstruct>.Create(records, r => r.MsBuildConditionalConstructId));
+                UniqueListIdentifierFactory<MsBuildConditionalConstruct>.Create(in records, r => r.MsBuildConditionalConstructId));
         }
     }
 }

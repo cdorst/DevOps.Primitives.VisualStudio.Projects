@@ -10,13 +10,13 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class Project
     {
         public Project() { }
-        public Project(AsciiStringReference name, MsBuildProjectFile projectFile)
+        public Project(in AsciiStringReference name, in MsBuildProjectFile projectFile)
         {
             Name = name;
             MsBuildProjectFile = projectFile;
         }
-        public Project(string name, MsBuildProjectFile projectFile)
-            : this(new AsciiStringReference(name), projectFile)
+        public Project(in string name, in MsBuildProjectFile projectFile)
+            : this(new AsciiStringReference(in name), in projectFile)
         {
         }
 

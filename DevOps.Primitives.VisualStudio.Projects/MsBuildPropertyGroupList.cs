@@ -14,25 +14,37 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildPropertyGroupList : IUniqueList<MsBuildPropertyGroup, MsBuildPropertyGroupListAssociation>
     {
         public MsBuildPropertyGroupList() { }
-        public MsBuildPropertyGroupList(List<MsBuildPropertyGroupListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildPropertyGroupList(
+            in List<MsBuildPropertyGroupListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildPropertyGroupListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildPropertyGroupList(MsBuildPropertyGroupListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildPropertyGroupListAssociation> { associations }, listIdentifier)
+        public MsBuildPropertyGroupList(
+            in MsBuildPropertyGroupListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildPropertyGroupListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildPropertyGroupList(MsBuildPropertyGroup propertyGroup, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildPropertyGroupListAssociation(propertyGroup), listIdentifier)
+        public MsBuildPropertyGroupList(
+            in MsBuildPropertyGroup propertyGroup,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildPropertyGroupListAssociation(in propertyGroup), in listIdentifier)
         {
         }
-        public MsBuildPropertyGroupList(MsBuildPropertyList propertyList, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildPropertyGroup(propertyList, condition), listIdentifier)
+        public MsBuildPropertyGroupList(
+            in MsBuildPropertyList propertyList,
+            in MsBuildCondition condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildPropertyGroup(in propertyList, in condition), in listIdentifier)
         {
         }
-        public MsBuildPropertyGroupList(MsBuildPropertyList propertyList, string condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildPropertyGroup(propertyList, condition), listIdentifier)
+        public MsBuildPropertyGroupList(
+            in MsBuildPropertyList propertyList,
+            in string condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildPropertyGroup(in propertyList, in condition), in listIdentifier)
         {
         }
 
@@ -54,11 +66,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join("\r\n\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetPropertyGroup()));
 
-        public void SetRecords(List<MsBuildPropertyGroup> records)
+        public void SetRecords(in List<MsBuildPropertyGroup> records)
         {
-            MsBuildPropertyGroupListAssociations = UniqueListAssociationsFactory<MsBuildPropertyGroup, MsBuildPropertyGroupListAssociation>.Create(records);
+            MsBuildPropertyGroupListAssociations = UniqueListAssociationsFactory<MsBuildPropertyGroup, MsBuildPropertyGroupListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildPropertyGroup>.Create(records, r => r.MsBuildPropertyGroupId));
+                UniqueListIdentifierFactory<MsBuildPropertyGroup>.Create(in records, r => r.MsBuildPropertyGroupId));
         }
     }
 }

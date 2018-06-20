@@ -10,13 +10,18 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildConditionalConstructListAssociation : IUniqueListAssociation<MsBuildConditionalConstruct>
     {
         public MsBuildConditionalConstructListAssociation() { }
-        public MsBuildConditionalConstructListAssociation(MsBuildConditionalConstruct conditionalConstruct, MsBuildConditionalConstructList conditionalConstructList = null)
+        public MsBuildConditionalConstructListAssociation(
+            in MsBuildConditionalConstruct conditionalConstruct,
+            in MsBuildConditionalConstructList conditionalConstructList = default)
         {
             MsBuildConditionalConstruct = conditionalConstruct;
             MsBuildConditionalConstructList = conditionalConstructList;
         }
-        public MsBuildConditionalConstructListAssociation(MsBuildConditionalConstructWhenElementList whenElementList, MsBuildConditionalConstructOtherwiseElement otherwiseElement = null, MsBuildConditionalConstructList conditionalConstructList = null)
-            : this(new MsBuildConditionalConstruct(whenElementList, otherwiseElement), conditionalConstructList)
+        public MsBuildConditionalConstructListAssociation(
+            in MsBuildConditionalConstructWhenElementList whenElementList,
+            in MsBuildConditionalConstructOtherwiseElement otherwiseElement = default,
+            in MsBuildConditionalConstructList conditionalConstructList = default)
+            : this(new MsBuildConditionalConstruct(in whenElementList, in otherwiseElement), in conditionalConstructList)
         {
         }
 
@@ -36,10 +41,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildConditionalConstruct GetRecord() => MsBuildConditionalConstruct;
 
-        public void SetRecord(MsBuildConditionalConstruct record)
+        public void SetRecord(in MsBuildConditionalConstruct record)
         {
             MsBuildConditionalConstruct = record;
-            MsBuildConditionalConstructId = MsBuildConditionalConstruct.MsBuildConditionalConstructId;
+            MsBuildConditionalConstructId = record.MsBuildConditionalConstructId;
         }
     }
 }

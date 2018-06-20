@@ -14,25 +14,37 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemGroupList : IUniqueList<MsBuildItemGroup, MsBuildItemGroupListAssociation>
     {
         public MsBuildItemGroupList() { }
-        public MsBuildItemGroupList(List<MsBuildItemGroupListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildItemGroupList(
+            in List<MsBuildItemGroupListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildItemGroupListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildItemGroupList(MsBuildItemGroupListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildItemGroupListAssociation> { associations }, listIdentifier)
+        public MsBuildItemGroupList(
+            in MsBuildItemGroupListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildItemGroupListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildItemGroupList(MsBuildItemGroup itemGroup, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemGroupListAssociation(itemGroup), listIdentifier)
+        public MsBuildItemGroupList(
+            in MsBuildItemGroup itemGroup,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemGroupListAssociation(in itemGroup), in listIdentifier)
         {
         }
-        public MsBuildItemGroupList(MsBuildItemList itemList, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemGroup(itemList, condition), listIdentifier)
+        public MsBuildItemGroupList(
+            in MsBuildItemList itemList,
+            in MsBuildCondition condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemGroup(in itemList, in condition), in listIdentifier)
         {
         }
-        public MsBuildItemGroupList(MsBuildItemList itemList, string condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemGroup(itemList, condition), listIdentifier)
+        public MsBuildItemGroupList(
+            in MsBuildItemList itemList,
+            in string condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemGroup(in itemList, in condition), in listIdentifier)
         {
         }
 
@@ -54,11 +66,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join("\r\n\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetItemGroup()));
 
-        public void SetRecords(List<MsBuildItemGroup> records)
+        public void SetRecords(in List<MsBuildItemGroup> records)
         {
-            MsBuildItemGroupListAssociations = UniqueListAssociationsFactory<MsBuildItemGroup, MsBuildItemGroupListAssociation>.Create(records);
+            MsBuildItemGroupListAssociations = UniqueListAssociationsFactory<MsBuildItemGroup, MsBuildItemGroupListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildItemGroup>.Create(records, r => r.MsBuildItemGroupId));
+                UniqueListIdentifierFactory<MsBuildItemGroup>.Create(in records, r => r.MsBuildItemGroupId));
         }
     }
 }

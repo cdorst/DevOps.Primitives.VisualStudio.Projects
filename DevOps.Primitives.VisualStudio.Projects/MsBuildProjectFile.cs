@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -13,11 +14,14 @@ namespace DevOps.Primitives.VisualStudio.Projects
         private const string XmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
 
         public MsBuildProjectFile() { }
-        public MsBuildProjectFile(ProjectType projectType, MsBuildConditionalContructItemGroupPropertyGroupSection content, MsBuildTargetList targetList)
+        public MsBuildProjectFile(
+            in ProjectType projectType,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content,
+            in MsBuildTargetList targetList)
         {
-            ProjectType = projectType;
             MsBuildConditionalContructItemGroupPropertyGroupSection = content;
             MsBuildTargetList = targetList;
+            ProjectType = projectType;
         }
 
         [Key]
@@ -40,11 +44,12 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public string GetProjectFile()
             => ProjectType == ProjectType.MicrosoftNetSdk
                 ? GetProjectNode()
-                : $"{XmlHeader}{GetProjectNode()}";
+                : Concat(XmlHeader, GetProjectNode());
 
         private string GetProjectNode()
-            => $"<{Tag} {GetToolsVersion()}{ProjectType.GetStringValue()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}{MsBuildTargetList?.GetTargets()}</{Tag}>\r\n";
+            => Concat("<", Tag, " ", GetToolsVersion(), ProjectType.GetStringValue(), ">", MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection(), MsBuildTargetList?.GetTargets(), "</", Tag, ">\r\n");
 
-        private string GetToolsVersion() => ProjectType == ProjectType.MicrosoftNetSdk ? string.Empty : "ToolsVersion=\"15.0\" ";
+        private string GetToolsVersion()
+            => ProjectType == ProjectType.MicrosoftNetSdk ? Empty : "ToolsVersion=\"15.0\" ";
     }
 }

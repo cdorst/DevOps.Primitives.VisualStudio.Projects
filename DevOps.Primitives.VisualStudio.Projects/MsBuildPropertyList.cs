@@ -14,29 +14,47 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildPropertyList : IUniqueList<MsBuildProperty, MsBuildPropertyListAssociation>
     {
         public MsBuildPropertyList() { }
-        public MsBuildPropertyList(List<MsBuildPropertyListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildPropertyList(
+            in List<MsBuildPropertyListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildPropertyListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildPropertyList(MsBuildPropertyListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildPropertyListAssociation> { associations }, listIdentifier)
+        public MsBuildPropertyList(
+            in MsBuildPropertyListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildPropertyListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildPropertyList(MsBuildProperty propertyGroup, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildPropertyListAssociation(propertyGroup), listIdentifier)
+        public MsBuildPropertyList(
+            in MsBuildProperty propertyGroup,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildPropertyListAssociation(in propertyGroup), in  listIdentifier)
         {
         }
-        public MsBuildPropertyList(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildProperty(name, value, condition), listIdentifier)
+        public MsBuildPropertyList(
+            in AsciiStringReference name,
+            in AsciiStringReference value,
+            in MsBuildCondition condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildProperty(in name, in value, in condition), in listIdentifier)
         {
         }
-        public MsBuildPropertyList(string name, string value, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildProperty(name, value, condition), listIdentifier)
+        public MsBuildPropertyList(
+            in string name,
+            in string value,
+            in MsBuildCondition condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildProperty(in name, in value, in condition), in listIdentifier)
         {
         }
-        public MsBuildPropertyList(string name, string value, string condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildProperty(name, value, condition), listIdentifier)
+        public MsBuildPropertyList(
+            in string name,
+            in string value,
+            in string condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildProperty(in name, in value, in condition), in listIdentifier)
         {
         }
 
@@ -58,11 +76,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join("\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetProperty()));
 
-        public void SetRecords(List<MsBuildProperty> records)
+        public void SetRecords(in List<MsBuildProperty> records)
         {
-            MsBuildPropertyListAssociations = UniqueListAssociationsFactory<MsBuildProperty, MsBuildPropertyListAssociation>.Create(records);
+            MsBuildPropertyListAssociations = UniqueListAssociationsFactory<MsBuildProperty, MsBuildPropertyListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildProperty>.Create(records, r => r.MsBuildPropertyId));
+                UniqueListIdentifierFactory<MsBuildProperty>.Create(in records, r => r.MsBuildPropertyId));
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -14,25 +15,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTaskAttributeList : IUniqueList<MsBuildTaskAttribute, MsBuildTaskAttributeListAssociation>
     {
         public MsBuildTaskAttributeList() { }
-        public MsBuildTaskAttributeList(List<MsBuildTaskAttributeListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildTaskAttributeList(in List<MsBuildTaskAttributeListAssociation> associations, in AsciiStringReference listIdentifier = default)
         {
             MsBuildTaskAttributeListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildTaskAttributeList(MsBuildTaskAttributeListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildTaskAttributeListAssociation> { associations }, listIdentifier)
+        public MsBuildTaskAttributeList(in MsBuildTaskAttributeListAssociation associations, in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildTaskAttributeListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildTaskAttributeList(MsBuildTaskAttribute taskAttribute, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTaskAttributeListAssociation(taskAttribute), listIdentifier)
+        public MsBuildTaskAttributeList(in MsBuildTaskAttribute taskAttribute, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTaskAttributeListAssociation(in taskAttribute), in listIdentifier)
         {
         }
-        public MsBuildTaskAttributeList(AsciiStringReference attribute, AsciiStringReference value, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTaskAttribute(attribute, value), listIdentifier)
+        public MsBuildTaskAttributeList(in AsciiStringReference attribute, in AsciiStringReference value, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTaskAttribute(in attribute, in value), in listIdentifier)
         {
         }
-        public MsBuildTaskAttributeList(string attribute, string value, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTaskAttribute(attribute, value), listIdentifier)
+        public MsBuildTaskAttributeList(in string attribute, in string value, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTaskAttribute(in attribute, in value), in listIdentifier)
         {
         }
 
@@ -51,14 +52,13 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public List<MsBuildTaskAttributeListAssociation> GetAssociations() => MsBuildTaskAttributeListAssociations;
 
         public string GetTaskAttributes()
-            => string.Join(" ",
-                GetAssociations().Select(each => each.GetRecord().GetTaskAttribute()));
+            => Join(" ", GetAssociations().Select(each => each.GetRecord().GetTaskAttribute()));
 
-        public void SetRecords(List<MsBuildTaskAttribute> records)
+        public void SetRecords(in List<MsBuildTaskAttribute> records)
         {
-            MsBuildTaskAttributeListAssociations = UniqueListAssociationsFactory<MsBuildTaskAttribute, MsBuildTaskAttributeListAssociation>.Create(records);
+            MsBuildTaskAttributeListAssociations = UniqueListAssociationsFactory<MsBuildTaskAttribute, MsBuildTaskAttributeListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildTaskAttribute>.Create(records, r => r.MsBuildTaskAttributeId));
+                UniqueListIdentifierFactory<MsBuildTaskAttribute>.Create(in records, r => r.MsBuildTaskAttributeId));
         }
     }
 }

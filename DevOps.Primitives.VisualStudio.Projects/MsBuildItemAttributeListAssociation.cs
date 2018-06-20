@@ -11,17 +11,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemAttributeListAssociation : IUniqueListAssociation<MsBuildItemAttribute>
     {
         public MsBuildItemAttributeListAssociation() { }
-        public MsBuildItemAttributeListAssociation(MsBuildItemAttribute itemAttribute, MsBuildItemAttributeList itemAttributeList = null)
+        public MsBuildItemAttributeListAssociation(
+            in MsBuildItemAttribute itemAttribute,
+            in MsBuildItemAttributeList itemAttributeList = default)
         {
             MsBuildItemAttribute = itemAttribute;
             MsBuildItemAttributeList = itemAttributeList;
         }
-        public MsBuildItemAttributeListAssociation(AsciiStringReference attribute, AsciiStringReference value, MsBuildItemAttributeList itemAttributeList = null)
-            : this(new MsBuildItemAttribute(attribute, value), itemAttributeList)
+        public MsBuildItemAttributeListAssociation(
+            in AsciiStringReference attribute,
+            in AsciiStringReference value,
+            in MsBuildItemAttributeList itemAttributeList = default)
+            : this(new MsBuildItemAttribute(in attribute, in value), in itemAttributeList)
         {
         }
-        public MsBuildItemAttributeListAssociation(string attribute, string value, MsBuildItemAttributeList itemAttributeList = null)
-            : this(new MsBuildItemAttribute(attribute, value), itemAttributeList)
+        public MsBuildItemAttributeListAssociation(
+            in string attribute,
+            in string value,
+            in MsBuildItemAttributeList itemAttributeList = default)
+            : this(new MsBuildItemAttribute(in attribute, in value), in itemAttributeList)
         {
         }
 
@@ -41,10 +49,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildItemAttribute GetRecord() => MsBuildItemAttribute;
 
-        public void SetRecord(MsBuildItemAttribute record)
+        public void SetRecord(in MsBuildItemAttribute record)
         {
             MsBuildItemAttribute = record;
-            MsBuildItemAttributeId = MsBuildItemAttribute.MsBuildItemAttributeId;
+            MsBuildItemAttributeId = record.MsBuildItemAttributeId;
         }
     }
 }

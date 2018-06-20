@@ -11,21 +11,43 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildPropertyListAssociation : IUniqueListAssociation<MsBuildProperty>
     {
         public MsBuildPropertyListAssociation() { }
-        public MsBuildPropertyListAssociation(MsBuildProperty property, MsBuildPropertyList propertyList = null)
+        public MsBuildPropertyListAssociation(
+            in MsBuildProperty property,
+            in MsBuildPropertyList propertyList = default)
         {
             MsBuildProperty = property;
             MsBuildPropertyList = propertyList;
         }
-        public MsBuildPropertyListAssociation(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null, MsBuildPropertyList propertyList = null)
-            : this(new MsBuildProperty(name, value, condition), propertyList)
+        public MsBuildPropertyListAssociation(
+            in AsciiStringReference name,
+            in AsciiStringReference value,
+            in MsBuildCondition condition = default,
+            in MsBuildPropertyList propertyList = default)
+            : this(new MsBuildProperty(in name, in value, in condition), in propertyList)
         {
         }
-        public MsBuildPropertyListAssociation(string name, string value, MsBuildCondition condition = null, MsBuildPropertyList propertyList = null)
-            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition, propertyList)
+        public MsBuildPropertyListAssociation(
+            in string name,
+            in string value,
+            in MsBuildCondition condition = default,
+            in MsBuildPropertyList propertyList = default)
+            : this(
+                  new AsciiStringReference(in name),
+                  new AsciiStringReference(in value),
+                  in condition,
+                  in propertyList)
         {
         }
-        public MsBuildPropertyListAssociation(string name, string value, string condition = null, MsBuildPropertyList propertyList = null)
-            : this(name, value, ConditionHelper.Create(condition), propertyList)
+        public MsBuildPropertyListAssociation(
+            in string name,
+            in string value,
+            in string condition = default,
+            in MsBuildPropertyList propertyList = default)
+            : this(
+                  in name,
+                  in value,
+                  ConditionHelper.Create(in condition),
+                  in propertyList)
         {
         }
 
@@ -45,10 +67,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildProperty GetRecord() => MsBuildProperty;
 
-        public void SetRecord(MsBuildProperty record)
+        public void SetRecord(in MsBuildProperty record)
         {
             MsBuildProperty = record;
-            MsBuildPropertyId = MsBuildProperty.MsBuildPropertyId;
+            MsBuildPropertyId = record.MsBuildPropertyId;
         }
     }
 }

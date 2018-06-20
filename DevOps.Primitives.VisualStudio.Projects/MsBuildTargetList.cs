@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -14,25 +15,25 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTargetList : IUniqueList<MsBuildTarget, MsBuildTargetListAssociation>
     {
         public MsBuildTargetList() { }
-        public MsBuildTargetList(List<MsBuildTargetListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildTargetList(in List<MsBuildTargetListAssociation> associations, in AsciiStringReference listIdentifier = default)
         {
             MsBuildTargetListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildTargetList(MsBuildTargetListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildTargetListAssociation> { associations }, listIdentifier)
+        public MsBuildTargetList(in MsBuildTargetListAssociation associations, in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildTargetListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildTargetList(MsBuildTarget target, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTargetListAssociation(target), listIdentifier)
+        public MsBuildTargetList(in MsBuildTarget target, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTargetListAssociation(in target), in listIdentifier)
         {
         }
-        public MsBuildTargetList(MsBuildTaskList taskList, AsciiStringReference name, AsciiStringReference outputs = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTarget(taskList, name, outputs), listIdentifier)
+        public MsBuildTargetList(in MsBuildTaskList taskList, in AsciiStringReference name, in AsciiStringReference outputs = default, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTarget(in taskList, in name, in outputs), in listIdentifier)
         {
         }
-        public MsBuildTargetList(MsBuildTaskList taskList, string name, string outputs = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildTarget(taskList, name, outputs), listIdentifier)
+        public MsBuildTargetList(in MsBuildTaskList taskList, in string name, in string outputs = default, in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildTarget(in taskList, in name, in outputs), in listIdentifier)
         {
         }
 
@@ -51,14 +52,13 @@ namespace DevOps.Primitives.VisualStudio.Projects
         public List<MsBuildTargetListAssociation> GetAssociations() => MsBuildTargetListAssociations;
 
         public string GetTargets()
-            => string.Join(string.Empty,
-                GetAssociations().Select(each => each.GetRecord().GetTarget()));
+            => Join(Empty, GetAssociations().Select(each => each.GetRecord().GetTarget()));
 
-        public void SetRecords(List<MsBuildTarget> records)
+        public void SetRecords(in List<MsBuildTarget> records)
         {
-            MsBuildTargetListAssociations = UniqueListAssociationsFactory<MsBuildTarget, MsBuildTargetListAssociation>.Create(records);
+            MsBuildTargetListAssociations = UniqueListAssociationsFactory<MsBuildTarget, MsBuildTargetListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildTarget>.Create(records, r => r.MsBuildTargetId));
+                UniqueListIdentifierFactory<MsBuildTarget>.Create(in records, r => r.MsBuildTargetId));
         }
     }
 }

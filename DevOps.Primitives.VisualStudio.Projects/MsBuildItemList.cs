@@ -14,29 +14,47 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildItemList : IUniqueList<MsBuildItem, MsBuildItemListAssociation>
     {
         public MsBuildItemList() { }
-        public MsBuildItemList(List<MsBuildItemListAssociation> associations, AsciiStringReference listIdentifier = null)
+        public MsBuildItemList(
+            in List<MsBuildItemListAssociation> associations,
+            in AsciiStringReference listIdentifier = default)
         {
             MsBuildItemListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildItemList(MsBuildItemListAssociation associations, AsciiStringReference listIdentifier = null)
-            : this(new List<MsBuildItemListAssociation> { associations }, listIdentifier)
+        public MsBuildItemList(
+            in MsBuildItemListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
+            : this(new List<MsBuildItemListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildItemList(MsBuildItem itemGroup, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItemListAssociation(itemGroup), listIdentifier)
+        public MsBuildItemList(
+            in MsBuildItem itemGroup,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItemListAssociation(in itemGroup), in listIdentifier)
         {
         }
-        public MsBuildItemList(AsciiStringReference name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItem(name, attributes, condition), listIdentifier)
+        public MsBuildItemList(
+            in AsciiStringReference name,
+            in MsBuildItemAttributeList attributes,
+            in MsBuildCondition condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItem(in name, in attributes, in condition), in listIdentifier)
         {
         }
-        public MsBuildItemList(string name, MsBuildItemAttributeList attributes, MsBuildCondition condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItem(name, attributes, condition), listIdentifier)
+        public MsBuildItemList(
+            in string name,
+            in MsBuildItemAttributeList attributes,
+            in MsBuildCondition condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItem(in name, in attributes, in condition), in listIdentifier)
         {
         }
-        public MsBuildItemList(string name, MsBuildItemAttributeList attributes, string condition = null, AsciiStringReference listIdentifier = null)
-            : this(new MsBuildItem(name, attributes, condition), listIdentifier)
+        public MsBuildItemList(
+            in string name,
+            in MsBuildItemAttributeList attributes,
+            in string condition = default,
+            in AsciiStringReference listIdentifier = default)
+            : this(new MsBuildItem(in name, in attributes, in condition), in listIdentifier)
         {
         }
 
@@ -58,11 +76,11 @@ namespace DevOps.Primitives.VisualStudio.Projects
             => string.Join("\r\n",
                 GetAssociations().Select(each => each.GetRecord().GetItem()));
 
-        public void SetRecords(List<MsBuildItem> records)
+        public void SetRecords(in List<MsBuildItem> records)
         {
-            MsBuildItemListAssociations = UniqueListAssociationsFactory<MsBuildItem, MsBuildItemListAssociation>.Create(records);
+            MsBuildItemListAssociations = UniqueListAssociationsFactory<MsBuildItem, MsBuildItemListAssociation>.Create(in records);
             ListIdentifier = new AsciiStringReference(
-                UniqueListIdentifierFactory<MsBuildItem>.Create(records, r => r.MsBuildItemId));
+                UniqueListIdentifierFactory<MsBuildItem>.Create(in records, r => r.MsBuildItemId));
         }
     }
 }

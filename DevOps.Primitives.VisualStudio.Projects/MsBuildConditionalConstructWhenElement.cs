@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -12,13 +13,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
         private const string Tag = "When";
 
         public MsBuildConditionalConstructWhenElement() { }
-        public MsBuildConditionalConstructWhenElement(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content)
+        public MsBuildConditionalConstructWhenElement(
+            in MsBuildCondition condition,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content)
         {
             MsBuildCondition = condition;
             MsBuildConditionalContructItemGroupPropertyGroupSection = content;
         }
-        public MsBuildConditionalConstructWhenElement(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content)
-            : this(new MsBuildCondition(condition), content)
+        public MsBuildConditionalConstructWhenElement(
+            in string condition,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content)
+            : this(new MsBuildCondition(in condition), in content)
         {
         }
 
@@ -36,6 +41,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(5)]
         public int MsBuildConditionalContructItemGroupPropertyGroupSectionId { get; set; }
 
-        public string GetWhenElement() => $"        <{Tag}{MsBuildCondition.GetCondition()}>{MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection()}</{Tag}>";
+        public string GetWhenElement()
+            => Concat("        <", Tag, MsBuildCondition.GetCondition(), ">", MsBuildConditionalContructItemGroupPropertyGroupSection.GetSection(), "</", Tag, ">");
     }
 }

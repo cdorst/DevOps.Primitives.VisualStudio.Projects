@@ -1,9 +1,9 @@
 ﻿using Common.EntityFrameworkServices;
-using Common.StringExtensions.Conditionals;
 using DevOps.Primitives.Strings;
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -11,17 +11,15 @@ namespace DevOps.Primitives.VisualStudio.Projects
     [Table("MsBuildTargets", Schema = nameof(VisualStudio))]
     public class MsBuildTarget : IUniqueListRecord
     {
-        private const string Tag = "Target";
-
         public MsBuildTarget() { }
-        public MsBuildTarget(MsBuildTaskList taskList, AsciiStringReference name, AsciiStringReference outputs = null)
+        public MsBuildTarget(in MsBuildTaskList taskList, in AsciiStringReference name, in AsciiStringReference outputs = default)
         {
             MsBuildTaskList = taskList;
             Name = name;
             Outputs = outputs;
         }
-        public MsBuildTarget(MsBuildTaskList taskList, string name, string outputs = null)
-            : this(taskList, new AsciiStringReference(name), !string.IsNullOrWhiteSpace(outputs) ? new AsciiStringReference(outputs) : null)
+        public MsBuildTarget(in MsBuildTaskList taskList, in string name, in string outputs = default)
+            : this(in taskList, new AsciiStringReference(in name), !IsNullOrWhiteSpace(outputs) ? new AsciiStringReference(in outputs) : null)
         {
         }
 
@@ -44,8 +42,8 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int? OutputsId { get; set; }
 
-        public string GetTarget() => $"<{Tag} Name=\"{Name.Value}\"{GetOutputs()}>{MsBuildTaskList.GetTasks()}</{Tag}>";
+        public string GetTarget() => Concat("<Target Name=\"", Name.Value, "\"", GetOutputs(), ">", MsBuildTaskList.GetTasks(), "</Target>");
 
-        private string GetOutputs() => $" Outputs=\"{Outputs.Value}\"".When(Outputs != null);
+        private string GetOutputs() => Outputs == null ? Empty : Concat(" Outputs=\"", Outputs.Value, "\"");
     }
 }

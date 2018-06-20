@@ -3,6 +3,7 @@ using DevOps.Primitives.Strings;
 using ProtoBuf;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static System.String;
 
 namespace DevOps.Primitives.VisualStudio.Projects
 {
@@ -11,18 +12,27 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildProperty : IUniqueListRecord
     {
         public MsBuildProperty() { }
-        public MsBuildProperty(AsciiStringReference name, AsciiStringReference value, MsBuildCondition condition = null)
+        public MsBuildProperty(
+            in AsciiStringReference name,
+            in AsciiStringReference value,
+            in MsBuildCondition condition = default)
         {
             ElementName = name;
             ElementValue = value;
             MsBuildCondition = condition;
         }
-        public MsBuildProperty(string name, string value, MsBuildCondition condition = null)
-            : this(new AsciiStringReference(name), new AsciiStringReference(value), condition)
+        public MsBuildProperty(
+            in string name,
+            in string value,
+            in MsBuildCondition condition = default)
+            : this(new AsciiStringReference(in name), new AsciiStringReference(in value), in condition)
         {
         }
-        public MsBuildProperty(string name, string value, string condition = null)
-            : this(name, value, ConditionHelper.Create(condition))
+        public MsBuildProperty(
+            in string name,
+            in string value,
+            in string condition = default)
+            : this(in name, in value, ConditionHelper.Create(in condition))
         {
         }
 
@@ -45,6 +55,7 @@ namespace DevOps.Primitives.VisualStudio.Projects
         [ProtoMember(7)]
         public int ElementValueId { get; set; }
 
-        public string GetProperty() => $"    <{ElementName.Value}{MsBuildCondition?.GetCondition()}>{ElementValue.Value}</{ElementName.Value}>";
+        public string GetProperty()
+            => Concat("    <", ElementName.Value, MsBuildCondition?.GetCondition(), ">", ElementValue.Value, "</", ElementName.Value, ">");
     }
 }

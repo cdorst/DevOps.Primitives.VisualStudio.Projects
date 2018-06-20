@@ -11,17 +11,17 @@ namespace DevOps.Primitives.VisualStudio.Projects
     public class MsBuildTaskAttributeListAssociation : IUniqueListAssociation<MsBuildTaskAttribute>
     {
         public MsBuildTaskAttributeListAssociation() { }
-        public MsBuildTaskAttributeListAssociation(MsBuildTaskAttribute taskAttribute, MsBuildTaskAttributeList taskAttributeList = null)
+        public MsBuildTaskAttributeListAssociation(in MsBuildTaskAttribute taskAttribute, in MsBuildTaskAttributeList taskAttributeList = default)
         {
             MsBuildTaskAttribute = taskAttribute;
             MsBuildTaskAttributeList = taskAttributeList;
         }
-        public MsBuildTaskAttributeListAssociation(AsciiStringReference attribute, AsciiStringReference value, MsBuildTaskAttributeList taskAttributeList = null)
-            : this(new MsBuildTaskAttribute(attribute, value), taskAttributeList)
+        public MsBuildTaskAttributeListAssociation(in AsciiStringReference attribute, in AsciiStringReference value, in MsBuildTaskAttributeList taskAttributeList = default)
+            : this(new MsBuildTaskAttribute(in attribute, in value), in taskAttributeList)
         {
         }
-        public MsBuildTaskAttributeListAssociation(string attribute, string value, MsBuildTaskAttributeList taskAttributeList = null)
-            : this(new MsBuildTaskAttribute(attribute, value), taskAttributeList)
+        public MsBuildTaskAttributeListAssociation(in string attribute, in string value, in MsBuildTaskAttributeList taskAttributeList = default)
+            : this(new MsBuildTaskAttribute(in attribute, in value), in taskAttributeList)
         {
         }
 
@@ -41,10 +41,10 @@ namespace DevOps.Primitives.VisualStudio.Projects
 
         public MsBuildTaskAttribute GetRecord() => MsBuildTaskAttribute;
 
-        public void SetRecord(MsBuildTaskAttribute record)
+        public void SetRecord(in MsBuildTaskAttribute record)
         {
             MsBuildTaskAttribute = record;
-            MsBuildTaskAttributeId = MsBuildTaskAttribute.MsBuildTaskAttributeId;
+            MsBuildTaskAttributeId = record.MsBuildTaskAttributeId;
         }
     }
 }
