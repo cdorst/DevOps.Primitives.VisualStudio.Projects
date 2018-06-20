@@ -21,19 +21,29 @@ namespace DevOps.Primitives.VisualStudio.Projects
             MsBuildConditionalConstructWhenElementListAssociations = associations;
             ListIdentifier = listIdentifier;
         }
-        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElementListAssociation associations, AsciiStringReference listIdentifier = default)
+        public MsBuildConditionalConstructWhenElementList(
+            in MsBuildConditionalConstructWhenElementListAssociation associations,
+            in AsciiStringReference listIdentifier = default)
             : this(new List<MsBuildConditionalConstructWhenElementListAssociation> { associations }, in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructWhenElementList(MsBuildConditionalConstructWhenElement whenElement, AsciiStringReference listIdentifier = default)
+        public MsBuildConditionalConstructWhenElementList(
+            in MsBuildConditionalConstructWhenElement whenElement,
+            in AsciiStringReference listIdentifier = default)
             : this(new MsBuildConditionalConstructWhenElementListAssociation(in whenElement), in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructWhenElementList(MsBuildCondition condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = default)
+        public MsBuildConditionalConstructWhenElementList(
+            in MsBuildCondition condition,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content,
+            in AsciiStringReference listIdentifier = default)
             : this(new MsBuildConditionalConstructWhenElement(in condition, in content), in listIdentifier)
         {
         }
-        public MsBuildConditionalConstructWhenElementList(string condition, MsBuildConditionalContructItemGroupPropertyGroupSection content, AsciiStringReference listIdentifier = default)
+        public MsBuildConditionalConstructWhenElementList(
+            in string condition,
+            in MsBuildConditionalContructItemGroupPropertyGroupSection content,
+            in AsciiStringReference listIdentifier = default)
             : this(new MsBuildConditionalConstructWhenElement(in condition, in content), in listIdentifier)
         {
         }
